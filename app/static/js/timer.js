@@ -1,14 +1,62 @@
 // Rushy Panchal
 // timer.js
 
-function Timer(element, totalSeconds, config) {
-	// create a timer on the element with the amount of remaining time
-	this.element = element;
-	this.total = totalSeconds;
+function Timer() {
+	// Create a timer counting seconds passed
 	this.elapsed = 0;
 	this.interval = null;
+	this.hooks = [];
+	}
+
+Timer.prototype.second = function(hook) {
+	// Add a callback for when a second passes
+	this.hooks.push(hook);
+	}
+
+Timer.prototype.start = function() {
+	// Start the timer
+	if (this.interval == null) {
+		var timer = this;
+		this.interval = setInterval(function() {
+			timer.elapsed++;
+			for (var i = 0; i < timer.hooks.length; i++) {
+				timer.hooks[i](timer.elapsed);
+				}
+			}, 1000);
+		};
+	}
+
+Timer.prototype.stop = function() {
+	// Stop the timer
+	if (this.interval != null) {
+		clearInterval(this.interval);
+		this.interval = null;
+		}
+	}
+
+Timer.prototype.reset = function() {
+	// Reset the timer
+	this.stop();
+	this.elapsed = 0;
+	}
+
+function TimerVisualizer(element, totalSeconds, timer, config) {
+	// Create a timer on the element with the amount of remaining time
+	this.element = element;
+	this.total = totalSeconds;
+	this.timer = timer || new Timer();
+
+	var visualizer = this;
+	this.timer.second(function() {
+		var timer = visualizer.timer;
+		visualizer.circle.animate((visualizer.total - timer.elapsed) / visualizer.total,
+			function() {
+				visualizer.circle.setText(visualizer.total - timer.elapsed);
+				});
+			});
+	
 	this.circle = new ProgressBar.Circle(element, config || {
-		color: "#FCB03C",
+		color: "green",
 		trailColor: "#ddd",
 		trailWidth: 1,
 		duration: 100,
@@ -22,39 +70,24 @@ function Timer(element, totalSeconds, config) {
 	this.circle.setText(this.total);
 	}
 
-Timer.prototype.start = function() {
+TimerVisualizer.prototype.start = function() {
 	// Start the timer
-	if (this.interval == null) {
-		var timer = this;
-		this.interval = setInterval(function() {
-			timer.elapsed++;
-			timer.circle.animate((timer.total - timer.elapsed) / timer.total, function() {
-				timer.circle.setText(timer.total - timer.elapsed);
-				});
-			}, 1000);
-		}
-	return this.interval;
+	this.timer.start();
 	}
 
-Timer.prototype.stop = function() {
+TimerVisualizer.prototype.stop = function() {
 	// Stop the timer
-	if (this.interval == null) return false;
-	else {
-		clearInterval(this.interval);
-		this.interval  = null;
-		return true;
-		}
+	this.timer.stop();
 	}
 
-Timer.prototype.reset = function() {
+TimerVisualizer.prototype.reset = function() {
 	// Reset the timer
-	this.stop();
-	this.elapsed = 0;
+	this.timer.reset();
 	this.circle.set(1);
 	this.circle.setText(timer.total);
 	}
 
-Timer.prototype.isRunning = function() {
+TimerVisualizer.prototype.isRunning = function() {
 	// Check if the Timer is running
-	return this.interval != null;
+	return this.timer.interval != null;
 	}

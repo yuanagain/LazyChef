@@ -1,52 +1,40 @@
 {% extends "page.html" %}
 {% block content %}
-	<section id="main">
-		<header>
-			<h2>Demo</h2>
-			<p>Demo with progressbars</p>
-		</header>
-		<div class="box">
-			<div id="timer" style = "width: 250px;"></div>
-			<button id = "change-timer">Start</button>
-			<button id = "reset-timer">Reset</button>
+	<section id="main" class = "container">
+		<div class="container">
+			<div class="row">
+				<div class="6u center">
+					<header><h2>Active Task</h2></header>
+					<div class="timer center" id = "active-task-timer"></div><br/>
+					<div id="description">Dice 2 red onions into ~4cm chunks</div>
+					<div id = "controls" class = "row">
+						<div id="control-prev" class = "control 4u"><i class="fa fa-step-backward"></i></div>
+						<div id="control-play" class = "control 4u"><i class="fa fa-play"></i></div>
+						<div id="control-next" class = "control 4u"><i class="fa fa-step-forward"></i></div>
+					</div>
+				</div>
+				<div class="6u$"><div class="row">
+					<div class="6u">
+						<h3>Upcoming Tasks</h3>
+					</div>
+					<div class="6u">
+						<h3>Background Tasks</h3>
+					</div>
+				</div></div>
+			</div>
 		</div>
 	</section>
 	<script type = "text/javascript">
-		timer = new Timer("#timer", 181);
-		$("#change-timer").click(function() {
-			if (timer.isRunning()) {
-				timer.stop();
-				this.innerHTML = "Start";
+		activeTimer = new TimerVisualizer("#active-task-timer", 181);
+		$("#control-play").click(function() {
+			if (activeTimer.isRunning()) {
+				activeTimer.stop();
+				$(this).children("i").get(0).className = "fa fa-play";
 				}
 			else {
-				timer.start();
-				this.innerHTML = "Pause";
+				activeTimer.start();
+				$(this).children("i").get(0).className = "fa fa-pause";
 				}
-			});
-		$("#reset-timer").click(function() {
-			timer.reset();
-			$("#change-timer").html("Start");
-			});
-
-		// var timer = new ProgressBar.Circle("#timer", {
-		// 	color: "#FCB03C",
-		// 	trailColor: "#ddd",
-		// 	trailWidth: 1,
-		// 	duration: 100,
-		// 	easing: 'linear',
-		// 	strokeWidth: 5,
-		// 	});
-
-		// $("#timer").click(function() {
-		// 	timer.set(totalSeconds / 60);
-		// 	var secondsElapsed = 0;
-		// 	setInterval(function() {
-		// 		secondsElapsed++;
-		// 		timer.animate((totalSeconds - secondsElapsed) / totalSeconds, function() {
-		// 			timer.setText(totalSeconds - secondsElapsed);
-		// 			});
-		// 			}, 1000);
-		// 		}
-		//	);
+			})
 	</script>
 {% endblock %}
