@@ -1,40 +1,40 @@
 {
-    "passive": [
-        {
-            "start_time": 0.0,
-            "name": "Boiling Water",
-            "time_delta": 1200.0,
-            "descripton": "Bring cold water to a boil",
-            "end_time": 0.0
-        },
-        {
-            "start_time": 120.0,
-            "name": "Pasta",
-            "time_delta": 0.0,
-            "descripton": "Ingredient",
-            "end_time": 120.0
-        },
-        {
-            "start_time": 120.0,
-            "name": "Water",
-            "time_delta": 0.0,
-            "descripton": "Ingredient",
-            "end_time": 120.0
-        }
-    ],
     "active": [
         {
             "start_time": 0.0,
             "name": "Boil Water",
             "time_delta": 60.0,
-            "descripton": "Bring cold water to a boil",
+            "description": "Bring cold water to a boil",
             "end_time": 60.0
         },
         {
             "start_time": 60.0,
             "name": "Cook Pasta",
             "time_delta": 60.0,
-            "descripton": "Boil pasta in boiling water",
+            "description": "Boil pasta in boiling water",
+            "end_time": 120.0
+        }
+    ],
+    "passive": [
+        {
+            "start_time": 0.0,
+            "name": "Boiling Water",
+            "time_delta": 1200.0,
+            "description": "Bring cold water to a boil",
+            "end_time": 0.0
+        },
+        {
+            "start_time": 120.0,
+            "name": "Pasta",
+            "time_delta": 0.0,
+            "description": "Ingredient",
+            "end_time": 120.0
+        },
+        {
+            "start_time": 120.0,
+            "name": "Water",
+            "time_delta": 0.0,
+            "description": "Ingredient",
             "end_time": 120.0
         }
     ]

@@ -72,7 +72,7 @@ class TaskNode():
       """
       Returns a copy of the TaskNode
       """
-      return TaskNode(self.id, self.act_time, self.back_time, self.task_str, self.task_desc)
+      return TaskNode(self.id, self.act_time, self.back_time, [], self.task_str, self.task_desc)
 
 def main():
   dependencies = np.array([1,2,3])
