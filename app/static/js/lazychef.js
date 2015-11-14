@@ -71,7 +71,11 @@ function LazyChef(data) {
 			// Remove the current task visualizer
 			taskTimer.destroy();
 			pointers.active++;
-			if (pointers.active + 1 < data.active.length) updateActive();
+			if (pointers.active < data.active.length) updateActive();
+			else {
+				$("#name").html("");
+				$("#description").html("");
+				}
 			});
 		}
 

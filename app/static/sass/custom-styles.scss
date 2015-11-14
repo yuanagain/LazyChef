@@ -1,6 +1,10 @@
 @import 'vars';
 @import 'mixins';
 
+row>* {
+	padding-left: 0px;
+	}
+
 .timer {
 	width: 25vw;
 	height: 25vw;
@@ -10,6 +14,7 @@
 		}
 	.timer-text {
 		font-size: 1em;
+		color: white !important;
 		}
 	&.active .timer-text {
 		font-size: 2em;
@@ -30,17 +35,57 @@
 	right-align: right;
 	}
 
+.recipe-list {
+	list-style-type: none;
+	margin-bottom: 0;
+	padding-top: 1em;
+	}
+
+#main-display {
+	background-color: #2c3e50;
+	padding: 2em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	* {
+		color: white;
+		}
+	}
+
+.name.padded {
+	padding-bottom: 0.5em;
+	&.upcoming:not(:first-child) {
+		padding-top: 1em;
+		}
+	}
+
+.passive-task {
+	padding-bottom: 1em;
+	}
+
+#bottom-display {
+	background-color: #507191;
+	color: white;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	margin-left: -2em;
+	}
+
 #controls {
+	padding: 2em;
 	.control {
 		padding-left: 0px;
 		font-size: 2em;
 		&:hover {
 			cursor: pointer;
 			cursor: hand;
-			color: blue;
+			color: orange;
 			}
 		@include vendor-property(transition, color 0.5s);
 		}
+	}
+
+#description {
+	padding-top: 1em;
 	}
 
 #background-tasks {
