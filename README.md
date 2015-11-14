@@ -1,7 +1,7 @@
 # Lazy Chef
 
 ![Logo](/resource/Logo2x.png)
-![Active Demo](/resource/Live App.png)
+![Active Demo](/resource/LiveApp.png)
 ## Introduction
 
 Do you try to get something done before microwave timers finish? What about while waiting on water to boil? Lazy Chef takes those micro-optimization to the next level by providing the easiest, most time-efficient set of instructions to complete any sequence of tasks. 
