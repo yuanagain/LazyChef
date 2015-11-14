@@ -33,7 +33,7 @@ class recipeLibrary():
             task_desc = content[1][:-1]
             act_time = float(content[2])
             back_time = float(content[3])
-            depends = content[4:]
+            depends = content[4:][:-1]
 
             # add to list
             tnode = TaskNode(index, act_time, back_time, depends, task_str, task_desc)
@@ -84,7 +84,7 @@ class recipeLibrary():
 
         # create DONE node, with all desired recipes as dependency
         recipe_ids  = [self.str_to_node[el] for el in recipes]
-        done_node = TaskNode(1, 0.0, 0.0, recipes_ids, "Done", "Nice work")
+        done_node = TaskNode(1, 0.0, 0.0, recipe_ids, "Done", "Nice work")
         node_list.append(done_node)
 
 
@@ -97,7 +97,7 @@ class recipeLibrary():
         relevant_set = set(relevant_nodes)
         print(relevant_set)
 
-    def find_relevant(node, relevant_nodes):
+    def find_relevant(self, node, relevant_nodes):
         """
         Populates relevant_nodes with all nodes relevant to node; i.e.
         resursively adds all dependencies' id's of node to relevant_nodes
@@ -105,8 +105,8 @@ class recipeLibrary():
 
         relevant_nodes.append(node.id)
 
-        for index in relevant_nodes:
-            relevent_nodes = find_relevant(self.tnode_list[index], relevant_nodes)
+        for index in self.tnode_list[node.id].depends:
+            relevent_nodes = self.find_relevant(self.tnode_list[index], relevant_nodes)
 
         return relevant_nodes
 
