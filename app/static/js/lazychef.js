@@ -1,7 +1,11 @@
+// Rushy Panchal
+// lazychef.js
+
 function LazyChef(data) {
 	var timer = new Timer();
 	var pointers = {
 		active: 0,
+		passive: 0,
 		upcomingTimers: [null, null, null]
 		}
 
@@ -17,6 +21,43 @@ function LazyChef(data) {
 		});
 
 	timer.secondHook(0, updateActive);
+
+	var passiveTemplate = document.getElementById("passive-task-nth");
+
+	/* Queue up the passive tasks
+	Although we are adding all of the tasks at once, they are only
+	registered as tasks when the proper time occurs.
+	If there are more than 3 concurrent passive tasks, then
+	only the first 3 are shown (this is done via CSS). */
+	for (var passiveIndex = 0; passiveIndex < data.passive.length; passiveIndex++) {
+		var passiveTask = data.passive[passiveIndex];
+		// this function hack is needed because we're iteratively creating functions
+		(function(passiveTask, passiveIndex) {
+			timer.secondHook(passiveTask.start_time, function() {
+				// create DOM to display as clone of a mock template
+				var taskDOM = passiveTemplate.cloneNode(true);
+				taskDOM.id = "passive-task-" + passiveIndex;
+				taskDOM.style.display = "block";
+				taskDOM.querySelector(".name").innerHTML = passiveTask.name;
+				taskDOM.querySelector(".timer").id = "passive-timer-" + passiveIndex;
+
+				$("#background-tasks").append(taskDOM);
+
+				passiveTimer = new TimerVisualizer("#passive-timer-" + passiveIndex, passiveTask.time_delta, passiveTask.end_time, passiveTask.name, timer);
+				passiveTimer.start();
+
+				// function hack, similar to above
+				(function(passiveTask, passiveIndex, passiveTimer) {
+					timer.secondHook(passiveTask.end_time + 1, function() {
+						// destroy the timer and remove the DOM element when finished
+						passiveTimer.destroy();
+						$("#passive-task-" + passiveIndex).remove();
+						pointers.passive++;
+						});
+					})(passiveTask, passiveIndex, passiveTimer);
+				});
+			})(passiveTask, passiveIndex);
+		}
 
 	function updateActive() {
 		// Update the current active task
@@ -53,10 +94,5 @@ function LazyChef(data) {
 				$("#upcoming-name-" + i).html(upcomingTask.name);
 				}
 			}
-		}
-
-	function updatePassive() {
-		// Update the listing of passive tasks
-		
 		}
 	}

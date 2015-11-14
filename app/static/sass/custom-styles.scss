@@ -8,7 +8,7 @@
 .timer {
 	width: 25vw;
 	height: 25vw;
-	&.upcoming {
+	&.upcoming, &.passive {
 		width: 8.33vw;
 		height: 8.33vw;
 		}
@@ -37,5 +37,11 @@
 			color: blue;
 			}
 		@include vendor-property(transition, color 0.5s);
+		}
+	}
+
+#background-tasks {
+	:nth-child(n+5) {
+		display: none !important;
 		}
 	}
