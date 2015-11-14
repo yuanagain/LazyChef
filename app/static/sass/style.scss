@@ -1149,7 +1149,7 @@
 	#banner {
 		background-attachment:	scroll,							fixed;
 		background-color:		#666;
-		background-image:		url('static/images/overlay.png'),		url('static/images/banner.jpg');
+		background-image:		url('/static/images/banner.jpg');
 		background-position:	top left,						center center;
 		background-repeat:		repeat,							no-repeat;
 		background-size:		auto,							cover;

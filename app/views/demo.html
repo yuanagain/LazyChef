@@ -5,8 +5,9 @@
 			<div class="row">
 				<div class="6u center">
 					<header><h2>Active Task</h2></header>
-					<div class="timer center" id = "active-task-timer"></div><br/>
-					<div id="description">Dice 2 red onions into ~4cm chunks</div>
+					<div id="name">Task</div>
+					<div class="timer center" id = "active-task-timer"></div>
+					<div id="description"></div><br/>
 					<div id = "controls" class = "row">
 						<div id="control-prev" class = "control 4u"><i class="fa fa-step-backward"></i></div>
 						<div id="control-play" class = "control 4u"><i class="fa fa-play"></i></div>
@@ -15,29 +16,30 @@
 				</div>
 				<div class="6u$"><div class="row">
 					<div class="6u">
-						<h3>Upcoming Tasks</h3>
+						<header><h3>Upcoming Tasks</h3></header>
+						<div class = "center 12u" id = "upcoming-tasks">
+							<div class="12u$ upcoming" id="upcoming-name-1"></div>
+							<div class="12u$ timer upcoming center" id="upcoming-timer-1"></div>
+							<div class="12u$ upcoming" id="upcoming-name-2"></div>
+							<div class="12u$ timer upcoming center" id="upcoming-timer-2"></div>
+							<div class="12u$ upcoming" id="upcoming-name-3"></div>
+							<div class="12u$ timer upcoming center" id="upcoming-timer-3"></div>
+						</div>
 					</div>
 					<div class="6u">
-						<h3>Background Tasks</h3>
+						<header><h3>Background Tasks</h3></header>
+						<div class = "container" id = "background-tasks"></div>
 					</div>
 				</div></div>
 			</div>
 		</div>
 	</section>
+	<script type = "text/javascript" src = "/static/js/lazychef.js"></script>
 	<script type = "text/javascript">
+		var input_data = {"active": [{"start_time": 0.0, "description": "Put water in pot. Put pot on stove", "name": "Put water on stove", "end_time": 5.0, "time_delta": 5}, {"start_time": 5.0, "description": "Add salt to water", "name": "Add salt", "end_time": 15, "time_delta": 10}, {"start_time": 15.0, "description": "Add pasta to boiling water", "name": "Put pasta in water", "end_time": 25.0, "time_delta": 10}, {"start_time": 25.0, "description": "Dice Tomatoes into small cubes", "name": "Dice Tomatoes", "end_time": 35.0, "time_delta": 10}, {"start_time": 35.0, "description": "Drain pasta using a strainer", "name": "Drain pasta", "end_time": 50.0, "time_delta": 15}, {"start_time": 50.0, "description": "Cover the pasta with Tomatoes", "name": "Put Tomatoes in pasta", "end_time": 55.0, "time_delta": 5}], "passive": [{"start_time": 0.0, "description": "Put water in pot. Put pot on stove", "name": "Put water on stove", "end_time": 0.0, "time_delta": 0}, {"start_time": 30.0, "description": "Bring water to a boil", "name": "Boil Water", "end_time": 30.0, "time_delta": 0}]}
+
 		$(document).ready(function() {
-			globalTimer = new Timer();
-			activeTimer = new TimerVisualizer("#active-task-timer", 175, globalTimer);
-			$("#control-play").click(function() {
-				if (activeTimer.isRunning()) {
-					activeTimer.stop();
-					$(this).children("i").get(0).className = "fa fa-play";
-					}
-				else {
-					activeTimer.start();
-					$(this).children("i").get(0).className = "fa fa-pause";
-					}
-				});
+			LazyChef(input_data);
 			});
 	</script>
 {% endblock %}

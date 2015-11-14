@@ -6,7 +6,12 @@
 	}
 
 .timer {
-	width: 250px;
+	width: 25vw;
+	height: 25vw;
+	&.upcoming {
+		width: 8.33vw;
+		height: 8.33vw;
+		}
 	}
 
 .center {
