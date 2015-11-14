@@ -32,5 +32,10 @@ class Server(Flask):
 			'''GET the index page'''
 			return render_template("index.html")
 
+		@self.route("/contact/")
+		def contact():
+			'''GET the contact page'''
+			return render_template("contact.html")
+
 if __name__ == '__main__':
 	main()

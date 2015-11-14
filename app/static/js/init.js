@@ -1,21 +1,15 @@
-/*
-	Alpha by Pixelarity
-	pixelarity.com @pixelarity
-	License: pixelarity.com/license
-*/
-
 (function($) {
 
 	skel.init({
 		reset: 'full',
 		breakpoints: {
-			global:		{ range: '*', href: 'static/css/style.css', containers: '60em', grid: { gutters: ['2em', 0] } },
-			wide:		{ range: '-1680', href: 'static/css/style-wide.css' },
-			normal:		{ range: '-1280', href: 'static/css/style-normal.css', viewport: { scalable: false } },
-			narrow:		{ range: '-980', href: 'static/css/style-narrow.css', containers: '90%' },
-			narrower:	{ range: '-840', href: 'static/css/style-narrower.css', containers: '90%!' },
-			mobile:		{ range: '-736', href: 'static/css/style-mobile.css', containers: '100%!' },
-			mobilep:	{ range: '-480', href: 'static/css/style-mobilep.css' }
+			global:		{ range: '*', href: '/static/css/style.css', containers: '60em', grid: { gutters: ['2em', 0] } },
+			wide:		{ range: '-1680', href: '/static/css/style-wide.css' },
+			normal:		{ range: '-1280', href: '/static/css/style-normal.css', viewport: { scalable: false } },
+			narrow:		{ range: '-980', href: '/static/css/style-narrow.css', containers: '90%' },
+			narrower:	{ range: '-840', href: '/static/css/style-narrower.css', containers: '90%!' },
+			mobile:		{ range: '-736', href: '/static/css/style-mobile.css', containers: '100%!' },
+			mobilep:	{ range: '-480', href: '/static/css/style-mobilep.css' }
 		},
 		plugins: {
 			layers: {
