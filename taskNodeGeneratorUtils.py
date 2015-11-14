@@ -1,15 +1,89 @@
 """
 This module provides classes for loading a library of recipes.
 
-Example usage:
+CONTENTS:
+============================================================
+I. CLASSES
+
+II. USEFUL METHODS
+
+III. EXAMPLE USAGE:
+============================================================
+
+============================================================
+I. CLASSES
+============================================================
+
+class recipeLibrary():
+
+Description:
+A library that loads defintions from disk and allows for extraction of
+lists of tasks upon which the optimizer can act
+
+============================================================
+II. USEFUL METHODS
+============================================================
+    
+
+__init__(self, def_list_dir = './recipe_files/'):
+    Description:
+    ------
+    Creates a recipeLibrary object
+    
+    Parameters
+    ------
+    def_list_dir : fname (default =  ./recipe_files/')
+
+        A list of defintion
+
+
+extract_list(self, recipes):
+    Description:
+    ------
+    Returns node_list of task nodes required to produce all tasks in recipes.
+
+    The node_list follows the following rules
+
+        node_list[0] := start TaskNode, upon which all ingredients depend
+        node_list[1] := done TaskNode, which depends upon each recipe in recipes
+
+        for K > 1
+        node_list[ K ] := kth TaskNode required for completion
+
+    Parameters
+    ------
+    recipes : list
+        A list of recipes task_str's that must be completes
+
+
+dump_file(self, outFile = None, show = True):
+    Description:
+    ------
+    Writes library to JSON
+
+    Parameters:
+    ------
+    outFile : filename (default = None)
+        The destination of the data dump. Defaults to ./tasks_out/tasklist
+        if outFile is not specified
+
+    show : boolean (default = True)
+        If True, prints contents to screen as well
+
+============================================================
+III. EXAMPLE USAGE:
+============================================================
 
 import taskNodeGeneratorUtils as tnUtils
 
 recipe_lib = tnUtils.recipeLibrary()
-target = ['Boil Water', 'Pasta']
-node_list = recipe_lib.extract_list(target)
 
-## Sort node_list via optimizaiton methods
+target = ['Boil Water', 'Pasta']
+
+node_list = recipe_lib.extract_list(target)
+...
+Sort node_list via optimizaiton methods
+...
 
 """
 import sys
@@ -69,22 +143,44 @@ class recipeLibrary():
         """
         tdlg.dump_print(self.tnode_list)
 
-    def dump_file(self, outFile = None):
+    def dump_file(self, outFile = None, show = True):
         """ 
+        Description:
+        ------
         Writes library to JSON
+
+        Parameters:
+        ------
+        outFile : filename (default = None)
+            The destination of the data dump. Defaults to ./tasks_out/tasklist
+            if outFile is not specified
+
+        show : boolean (default = True)
+            If True, prints contents to screen as well
         """
         tdlg.tnodelist_tojson(self.tnode_list, outFile)
+        if show:
+            os.system("cat " + outFile)
 
 
     def extract_list(self, recipes):
         """
-        returns node_list of task nodes required to produce all tasks in recipes
+        Description:
+        ------
+        Returns node_list of task nodes required to produce all tasks in recipes.
 
-        node_list[0] := start TaskNode
-        node_list[1] := done TaskNode
+        The node_list follows the following rules
 
-        for k > 1
-        node_list[k] := kth TaskNode
+            node_list[0] := start TaskNode, upon which all ingredients depend
+            node_list[1] := done TaskNode, which depends upon each recipe in recipes
+
+            for K > 1
+            node_list[ K ] := kth TaskNode required for completion
+
+        Parameters
+        ------
+        recipes : list
+            A list of recipes task_str's that must be completes
         """
         
         node_list = []
@@ -137,7 +233,12 @@ class recipeLibrary():
 
             # adjust id's
             new_node.id = renumerate[new_node.id]
+
             new_node.depends = [renumerate[dpd] for dpd in new_node.depends]
+
+            # connect all raw ingredients to start node
+            if len(new_node.depends) == 0:
+                new_node.depends.append(0)
 
             relevant_list.append(new_node)
 
@@ -184,16 +285,31 @@ def clean_list(node_list):
 
 def main():
 
-    print("testing constructor")
+    print("==== TESTING CONSTRUCTOR ==== ")
 
     target = ['Boil Water', 'Pasta']
 
     lib = recipeLibrary()
+    print("SUCCESS")
+    print("\n==== PRINTING LIBRARY ==== ")
     lib.print_library()
+    print('\n')
+    print("==== + ==== + ==== + ==== ")
+    print("SAVING CONTENTS TO: ./tasks_out/test_outfile.txt ")
     os.system("rm -rf ./tasks_out/test_outfile.txt")
     lib.dump_file(outFile = "./tasks_out/test_outfile.txt")
+
+    print("\n==== ==== ==== ==== ")
+    print("EXTRACTING RELEVANT TASKS FOR:")
+    print(target)
     node_list = lib.extract_list(target)
+    print("\n==== TASKS EXTRACTED ==== ")
     print_nodelist(node_list)
+    print("\n==== RAW INGREDIENTS ==== ")
+    for i in range(1, len(node_list)):
+        node = node_list[i]
+        if node.depends[0] == 0:
+            print(node.task_str)
 
     #print(lib.str_to_node['Cook Pasta'].depends)
 if __name__ == "__main__":
