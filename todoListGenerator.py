@@ -1,9 +1,21 @@
 """
-TODO: test functionalities
-===================
+This module provides methods for exporting data from
+a list of TaskNodes to JSON
+
 The primary function of interest of this file is
 tnodelist_tojson, which allows the user to generate
 json file todo items from a list of TaskNodes.
+
+CONTENTS:
+============================================================
+I. USEFUL METHODS
+
+II. EXAMPLE USAGE:
+============================================================
+
+============================================================
+I. USEFUL METHODS
+============================================================
 
 def tnodelist_tojson(tnode_list, out_fname = None):
     Parameters:
@@ -17,6 +29,27 @@ def tnodelist_tojson(tnode_list, out_fname = None):
         The output json filname. Defaults to 
         "./tasks_out/tasklist<XYZ>.txt", where <XYZ> is an integer
 
+============================================================
+II. EXAMPLE USAGE:
+============================================================
+
+## import thisclass
+import todoListGenerator as tdlg
+
+## Generate raw lists
+import taskNodeGeneratorUtils as tnUtils
+
+recipe_lib = tnUtils.recipeLibrary()
+target = ['Boil Water', 'Pasta']
+node_list = recipe_lib.extract_list(target)
+
+## Optimize list
+...
+Optimize node_list
+...
+
+## Export list to file
+tdlg.tnode_list(node_list, out_fname = 'batch_job_001.json')
 
 ===================
 AUX DEV NOTES
