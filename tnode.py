@@ -8,7 +8,6 @@ Module: Task Node
 '''
 
 import numpy as np
-from Queue import PriorityQueue
 
 '''
 class TaskNode:
@@ -68,6 +67,12 @@ class TaskNode():
         #Potential TODO: make sure objects the same type
         #assert isInstance(other,A)
         return cmp((other.back_time), (self.back_time))
+
+    def copy(self):
+      """
+      Returns a copy of the TaskNode
+      """
+      return TaskNode(self.id, self.act_time, self.back_time, self.task_str, self.task_desc)
 
 def main():
   dependencies = np.array([1,2,3])

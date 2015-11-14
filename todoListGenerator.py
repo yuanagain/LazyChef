@@ -56,7 +56,7 @@ def createTask(tnode, current_time = 0.0):
     task_dict['name'] = tnode.task_str
     task_dict['start_time'] = current_time
     task_dict['end_time'] = current_time + tnode.act_time
-    task_dict['time_delta'] = tnode.act_time
+    task_dict['time_delta'] = max(tnode.act_time, tnode.back_time)
     task_dict['descripton'] = tnode.task_desc
 
     return task_dict
@@ -83,6 +83,9 @@ def tnodelist_tojson(tnode_list, out_fname = None):
     with open(out_fname, 'w') as outfile:
         json.dump(task_pack, outfile, indent=4)
 
+def dump_print(tnode_list):
+    task_pack = generate_todo_list(tnode_list)
+    print(json.dumps(task_pack))
 
 def generate_todo_list(tnode_list):
     """
