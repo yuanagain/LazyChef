@@ -1,5 +1,9 @@
 """
-Generates dummy nodes
+Generates 7 dummy nodes at ./tasks_out/
+
+Usage:
+
+python json_test_file.py
 """
 import numpy as np
 from tnode import TaskNode

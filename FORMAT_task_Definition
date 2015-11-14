@@ -1,0 +1,27 @@
+=========
+Legend:
+=========
+
+    task_str    : Task String (brief string identification of
+                   task)
+                  [String]
+    task_desc   : Full task description as a string [String]  
+
+    act_time    : Active time (required by human) [double]
+
+    back_time	: Background time
+
+    dependency<k> : the kth dependency
+
+=========
+Format:
+=========
+
+<task_str>
+<task_desc>
+<act_time>
+<back_time>
+<dependency1>
+<dependency2>
+...
+<dependencyN>

@@ -53,3 +53,12 @@
 	$color-header-fg:			#bbb;
 	$color-header-fg-bold:		#fff;
 	$color-header-fg-light:		#999;
+
+// Media queries
+	$mobile: "only screen and (min-width: 320px) and (max-width: 480px)";
+	$mobile-portrait: "only screen and (max-width: 320px) and (max-height: 480px)";
+	$tablet: "only screen and (min-width: 768px) and (max-width: 1024px)";
+	$mobile-tablet: "only screen and (min-width: 320px) and (max-width: 1024px)";
+	$tablet-larger: "only screen and (min-width: 768px)";
+	$desktop: "only screen and (min-width: 1224px)";
+	$largeScreen: "only screen and (min-width: 1824px)";

@@ -1,0 +1,41 @@
+{
+    "active": [
+        {
+            "name": "Boil Water",
+            "start_time": 0.0,
+            "time_delta": 60.0,
+            "end_time": 60.0,
+            "description": "Bring cold water to a boil"
+        },
+        {
+            "name": "Cook Pasta",
+            "start_time": 60.0,
+            "time_delta": 60.0,
+            "end_time": 120.0,
+            "description": "Boil pasta in boiling water"
+        }
+    ],
+    "passive": [
+        {
+            "name": "Boiling Water",
+            "start_time": 0.0,
+            "time_delta": 1200.0,
+            "end_time": 0.0,
+            "description": "Bring cold water to a boil"
+        },
+        {
+            "name": "Pasta",
+            "start_time": 120.0,
+            "time_delta": 0.0,
+            "end_time": 120.0,
+            "description": "Ingredient"
+        },
+        {
+            "name": "Water",
+            "start_time": 120.0,
+            "time_delta": 0.0,
+            "end_time": 120.0,
+            "description": "Ingredient"
+        }
+    ]
+}
