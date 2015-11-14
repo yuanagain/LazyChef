@@ -62,6 +62,15 @@ task_dict['start_time']
 task_dict['end_time']
 task_dict['time_delta']
 task_dict['descripton']
+
+
+
+
+
+
+Author: Yuan Wang
+Contact/Support: yuanw@princeton.edu
+
 """
 
 from tnode import TaskNode

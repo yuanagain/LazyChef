@@ -85,6 +85,14 @@ node_list = recipe_lib.extract_list(target)
 Sort node_list via optimizaiton methods
 ...
 
+
+
+
+
+
+Author: Yuan Wang
+Contact/Support: yuanw@princeton.edu
+
 """
 import sys
 import os
