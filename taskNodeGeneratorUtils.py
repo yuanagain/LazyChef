@@ -98,7 +98,7 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
-
+import walmartJSON as wJSON
 from tnode import TaskNode
 import todoListGenerator as tdlg
 import random
@@ -314,10 +314,12 @@ def main():
     print("\n==== TASKS EXTRACTED ==== ")
     print_nodelist(node_list)
     print("\n==== RAW INGREDIENTS ==== ")
+    ingredient_list = []
     for i in range(1, len(node_list)):
         node = node_list[i]
         if node.depends[0] == 0:
-            print(node.task_str)
+            ingredient_list.append(node.task_str)
+    wJSON.generateIngredientJSONFile(ingredient_list)
 
     #print(lib.str_to_node['Cook Pasta'].depends)
 if __name__ == "__main__":

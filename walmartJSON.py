@@ -22,6 +22,10 @@ func - getIngredientInformation: returns a list of dictionaries where each dicti
             print(list_of_info[0]['salePrice']) -> 5.48
             print(list_of_info[2]['name']) -> Ozarka 100% Natural Spring Water, 0.5 l, 24 ct
             print(list_of_info[2]['stock']) -> Available
+func - generateIngredientJSONFile: writes the ingredient information in JSON to the shopping cart JSON file
+        examples:
+            i = {"Tomatoes", "Pasta", "Water", "Salt"}
+            generateIngredientJSONFile(i) -> shoppingCart.json is now populated
 """
 
 import http.client
@@ -77,3 +81,15 @@ def getIngredientInformation(ingredients):
         info_data['productUrl'] = info_json['productUrl']
         info_list.append(info_data)
     return info_list
+
+
+def generateIngredientJSONFile(ingredients):
+    list_of_info = getIngredientInformation(ingredients)
+    with open('shoppingCart.json', 'w') as f:
+        json.dump(list_of_info, f)
+
+
+def generateIngredientJSONFile(ingredients, file_name):
+    list_of_info = getIngredientInformation(ingredients)
+    with open(file_name, 'w') as f:
+        json.dump(list_of_info, f)
