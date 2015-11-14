@@ -1,16 +1,18 @@
 @import 'vars';
 @import 'mixins';
 
-.timer-text {
-	font-size: 16pt;
-	}
-
 .timer {
 	width: 25vw;
 	height: 25vw;
 	&.upcoming, &.passive {
 		width: 8.33vw;
 		height: 8.33vw;
+		}
+	.timer-text {
+		font-size: 1em;
+		}
+	&.active .timer-text {
+		font-size: 2em;
 		}
 	}
 
@@ -30,6 +32,7 @@
 
 #controls {
 	.control {
+		padding-left: 0px;
 		font-size: 2em;
 		&:hover {
 			cursor: pointer;
@@ -43,5 +46,38 @@
 #background-tasks {
 	:nth-child(n+5) {
 		display: none !important;
+		}
+	}
+
+@media #{$mobile} {
+	#control-prev, #control-next {
+		display: none;
+		}
+	#control-play {
+		padding-left: 0px;
+		width: 100%;
+		}
+	}
+
+@media #{$mobile-portrait} {
+	.timer-text {
+		font-size: 0.5em !important;
+		}
+	#upcoming-tasks-column {
+		display: none;
+		}
+	#background-tasks-column {
+		width: 100%;
+		}
+	}
+
+@media #{$tablet-larger} {
+	.timer {
+		.timer-text {
+			font-size: 1.5em;
+			}
+		&.active .timer-text {
+			font-size: 4em;
+			}
 		}
 	}

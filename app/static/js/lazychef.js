@@ -43,7 +43,7 @@ function LazyChef(data) {
 
 				$("#background-tasks").append(taskDOM);
 
-				passiveTimer = new TimerVisualizer("#passive-timer-" + passiveIndex, passiveTask.time_delta, passiveTask.end_time, passiveTask.name, timer);
+				passiveTimer = new TimerVisualizer("#passive-timer-" + passiveIndex, passiveTask.time_delta, passiveTask.end_time, passiveTask.name, timer, passive_color);
 				passiveTimer.start();
 
 				// function hack, similar to above
