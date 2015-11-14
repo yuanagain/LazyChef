@@ -8,6 +8,7 @@ Module: Task Node
 '''
 
 import numpy as np
+from Queue import PriorityQueue
 
 '''
 class TaskNode:
@@ -25,9 +26,8 @@ attributes:
                   (toDo, inProgress, Completed) [String]
     id          : unique integer index of this task in graph
                   [int]
-    depends     : List of Task Nodes dependent on completion
-                  of parent Task Node
-                  [List]
+    depends     : List of ids corresponding to dependent TaskNodes
+                  of this parent Task Node [List]
     task_str    : Task String (brief string identification of
                    task)
                   [String]
@@ -41,7 +41,13 @@ initializer input:
     task_desc_in
 
 methods:
-    
+
+    __cmp__(self,other)
+      -Overriden compare method for TaskNodes (by Background time)
+   
+    main():
+      -Tester client
+
 '''
 
 class TaskNode():
@@ -56,18 +62,25 @@ class TaskNode():
         self.task_str = task_str_in
         self.task_desc = task_desc_in
 
+    #Overwrite the compare function to compare TaskNodes by
+    #background time
+    def __cmp__(self,other):
+        #Potential TODO: make sure objects the same type
+        #assert isInstance(other,A)
+        return cmp((other.back_time), (self.back_time))
+
 def main():
   dependencies = np.array([1,2,3])
-  Tnode = TaskNode(1,4.0,0.0,dependencies,'Chop onions',\
+  Tnode1 = TaskNode(1,4,0,dependencies,'Chop onions',\
                     'Dice the onions to 0.5 mm^3 chunks')
-  print(Tnode.state)
-  print(Tnode.elap_time)
-  print(Tnode.id)
-  print(Tnode.act_time)
-  print(Tnode.back_time)
-  print(Tnode.depends)
-  print(Tnode.task_str)
-  print(Tnode.task_desc)
+  print(Tnode1.state)
+  print(Tnode1.elap_time)
+  print(Tnode1.id)
+  print(Tnode1.act_time)
+  print(Tnode1.back_time)
+  print(Tnode1.depends)
+  print(Tnode1.task_str)
+  print(Tnode1.task_desc)
 
 if __name__ == '__main__':
   main()

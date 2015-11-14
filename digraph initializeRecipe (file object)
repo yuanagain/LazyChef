@@ -1,0 +1,21 @@
+digraph initializeRecipe (file object)
+	open file object
+	put everything in file object into the graph
+
+node Array[] getNewAccessibleNodes (digraph)
+	if(root != complete)
+		{
+			put root on pq
+		}
+	else
+		{
+			bfs(digraph)
+			while(array[i] == completed)
+				{
+					getNeighbors(array[i])
+					if(!pq.contains(neighbors))
+					{
+						pq.put(neighbors)
+					}
+				}
+		}
