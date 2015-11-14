@@ -31,7 +31,9 @@ attributes:
     task_str    : Task String (brief string identification of
                    task)
                   [String]
-    task_desc   : Full task description as a string [String]              
+    task_desc   : Full task description as a string [String]
+    beg_time    : Beginning time for this task in optimized
+                  order [double]              
 
     TODO: include a list of quantities so that task_desc can
     say something like "mix X of this and Y of that"
@@ -61,6 +63,7 @@ class TaskNode():
         self.depends = depends_in
         self.task_str = task_str_in
         self.task_desc = task_desc_in
+        self.beg_time = 0.0
 
     #Overwrite the compare function to compare TaskNodes by
     #background time
