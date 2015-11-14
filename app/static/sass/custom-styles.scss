@@ -1,0 +1,36 @@
+@import 'vars';
+@import 'mixins';
+
+.timer-text {
+	font-size: 16pt;
+	}
+
+.timer {
+	width: 250px;
+	}
+
+.center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+.left-align {
+	text-align: left;
+	}
+
+.right-align {
+	right-align: right;
+	}
+
+#controls {
+	.control {
+		font-size: 2em;
+		&:hover {
+			cursor: pointer;
+			cursor: hand;
+			color: blue;
+			}
+		@include vendor-property(transition, color 0.5s);
+		}
+	}
