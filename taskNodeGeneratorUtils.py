@@ -98,7 +98,6 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
-import walmartJSON as wJSON
 from tnode import TaskNode
 import todoListGenerator as tdlg
 import random
