@@ -25,16 +25,19 @@
 		</div>
 	</section>
 	<script type = "text/javascript">
-		activeTimer = new TimerVisualizer("#active-task-timer", 181);
-		$("#control-play").click(function() {
-			if (activeTimer.isRunning()) {
-				activeTimer.stop();
-				$(this).children("i").get(0).className = "fa fa-play";
-				}
-			else {
-				activeTimer.start();
-				$(this).children("i").get(0).className = "fa fa-pause";
-				}
-			})
+		$(document).ready(function() {
+			globalTimer = new Timer();
+			activeTimer = new TimerVisualizer("#active-task-timer", 175, globalTimer);
+			$("#control-play").click(function() {
+				if (activeTimer.isRunning()) {
+					activeTimer.stop();
+					$(this).children("i").get(0).className = "fa fa-play";
+					}
+				else {
+					activeTimer.start();
+					$(this).children("i").get(0).className = "fa fa-pause";
+					}
+				});
+			});
 	</script>
 {% endblock %}
