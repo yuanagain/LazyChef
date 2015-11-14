@@ -98,7 +98,6 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
-import walmartJSON as wJSON
 from tnode import TaskNode
 import todoListGenerator as tdlg
 import random
@@ -297,7 +296,7 @@ def main():
 
     target = ['Boil Water', 'Pasta']
 
-    lib = recipeLibrary()
+    lib = recipeLibrary(def_list_dir = './test_recipes/')
     print("SUCCESS")
     print("\n==== PRINTING LIBRARY ==== ")
     lib.print_library()
