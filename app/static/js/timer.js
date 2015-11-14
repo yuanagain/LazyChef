@@ -65,7 +65,7 @@ Timer.prototype.reset = function() {
 	this.elapsed = 0;
 	}
 
-function TimerVisualizer(element, delta, end, name, timer, config) {
+function TimerVisualizer(element, delta, end, name, timer, color) {
 	// Create a timer on the element with the amount of remaining time
 	this.element = element;
 	this.name = name;
@@ -74,8 +74,8 @@ function TimerVisualizer(element, delta, end, name, timer, config) {
 	this.timer = timer;
 	this.timer_id = Math.random(); // generate a random ID
 	
-	this.circle = new ProgressBar.Circle(element, config || {
-		color: "green",
+	this.circle = new ProgressBar.Circle(element, {
+		color: color || default_color,
 		trailColor: "#ddd",
 		trailWidth: 1,
 		duration: 975,

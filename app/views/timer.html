@@ -1,0 +1,60 @@
+{% extends "page.html" %}
+{% block content %}
+	<section id="main" class = "container">
+		<div class="container">
+			<div class="row" id = "main-display">
+				<div class="6u center">
+					<header class = "center"><h2>Active Task</h2></header>
+					<h3><div id="name">Task</div></h3>
+					<div class="timer center active" id = "active-task-timer"></div>
+					<h4><div id="description"></div></h4><br/>
+				</div>
+				<div class="6u$"><div class="row">
+					<div class="6u" id = "upcoming-tasks-column">
+						<header class = "center"><h3>Upcoming Tasks</h3></header>
+						<div class = "center 12u" id = "upcoming-tasks">
+							<div class="12u$ upcoming name padded" id="upcoming-name-1"></div>
+							<div class="12u$ timer upcoming center" id="upcoming-timer-1"></div>
+							<div class="12u$ upcoming name padded" id="upcoming-name-2"></div>
+							<div class="12u$ timer upcoming center" id="upcoming-timer-2"></div>
+							<div class="12u$ upcoming name padded" id="upcoming-name-3"></div>
+							<div class="12u$ timer upcoming center" id="upcoming-timer-3"></div>
+						</div>
+					</div>
+					<div class="6u" id = "background-tasks-column">
+						<header class = "center"><h3>Background Tasks</h3></header>
+						<div class = "center 12u" id = "background-tasks">
+							<div id = "passive-task-nth" class = "passive-task" style = "display: none;">
+								<div class="12u$ passive name padded" id="passive-name-nth"></div>
+								<div class="12u$ timer passive center" id="passive-timer-nth"></div>
+							</div>
+						</div>
+					</div>
+				</div></div>
+			</div>
+			<div id = "bottom-display" class = "row center">
+				<div class="6u" id = "controls"><div class = "row">
+					<div id="control-prev" class = "control 4u"><i class="fa fa-step-backward"></i></div>
+					<div id="control-play" class = "control 4u"><i class="fa fa-play"></i></div>
+					<div id="control-next" class = "control 4u"><i class="fa fa-step-forward"></i></div>
+				</div></div>
+				<div class="6u">
+					<ul class = "recipe-list">
+						{% for recipe in recipes %}
+						<li>{{ recipe }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script type = "text/javascript" src = "/static/js/lazychef.js"></script>
+	<script type = "text/javascript">
+		var default_color = "#FF9800",
+			passive_color = "#A8F6FF";
+
+		$(document).ready(function() {
+			LazyChef({{ recipe_data|safe }});
+			});
+	</script>
+{% endblock %}
