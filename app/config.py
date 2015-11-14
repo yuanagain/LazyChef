@@ -9,3 +9,7 @@ class FlaskSettings(object):
 
 	SERVER_NAME = "localhost:8080"
 	PREFERRED_URL_SCHEME = "http://"
+
+VIEW_GLOBALS = {
+	"name": "HackPrinceton 2015"
+	}

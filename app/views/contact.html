@@ -1,45 +1,38 @@
-<!DOCTYPE HTML>
-<html>
-	{% include "partials/base.html" %}
-	<body>
-		{% include "partials/header.html" %}
-		<section id="main" class="container 75%">
-			<header>
-				<h2>Contact Us</h2>
-				<p>Amet ut elit cep fusce massa sed tempor adipiscing.</p>
-			</header>
-			<div class="box">
-				<form method="post" action="#">
-					<div class="row uniform 50%">
-						<div class="6u 12u(mobilep)">
-							<input type="text" name="name" id="name" value="" placeholder="Name" />
-						</div>
-						<div class="6u 12u(mobilep)">
-							<input type="email" name="email" id="email" value="" placeholder="Email" />
-						</div>
+{% extends "page.html" %}
+{% block content %}
+	<section id="main" class="container 75%">
+		<header>
+			<h2>Contact Us</h2>
+			<p>Amet ut elit cep fusce massa sed tempor adipiscing.</p>
+		</header>
+		<div class="box">
+			<form method="post" action="#">
+				<div class="row uniform 50%">
+					<div class="6u 12u(mobilep)">
+						<input type="text" name="name" id="name" value="" placeholder="Name" />
 					</div>
-					<div class="row uniform 50%">
-						<div class="12u">
-							<input type="text" name="subject" id="subject" value="" placeholder="Subject" />
-						</div>
+					<div class="6u 12u(mobilep)">
+						<input type="email" name="email" id="email" value="" placeholder="Email" />
 					</div>
-					<div class="row uniform 50%">
-						<div class="12u">
-							<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
-						</div>
+				</div>
+				<div class="row uniform 50%">
+					<div class="12u">
+						<input type="text" name="subject" id="subject" value="" placeholder="Subject" />
 					</div>
-					<div class="row uniform">
-						<div class="12u">
-							<ul class="actions align-center">
-								<li><input type="submit" value="Send Message" /></li>
-							</ul>
-						</div>
+				</div>
+				<div class="row uniform 50%">
+					<div class="12u">
+						<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
 					</div>
-				</form>
-			</div>
-		</section>
-
-	<!-- Footer -->
-		{% include "partials/footer.html" %}
-	</body>
-</html>
+				</div>
+				<div class="row uniform">
+					<div class="12u">
+						<ul class="actions align-center">
+							<li><input type="submit" value="Send Message" /></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+{% endblock %}

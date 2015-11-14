@@ -1,0 +1,52 @@
+{% extends "page.html" %}
+{% block content %}
+	<section id="main">
+		<header>
+			<h2>Demo</h2>
+			<p>Demo with progressbars</p>
+		</header>
+		<div class="box">
+			<div id="timer" style = "width: 250px;"></div>
+			<button id = "change-timer">Start</button>
+			<button id = "reset-timer">Reset</button>
+		</div>
+	</section>
+	<script type = "text/javascript">
+		timer = new Timer("#timer", 181);
+		$("#change-timer").click(function() {
+			if (timer.isRunning()) {
+				timer.stop();
+				this.innerHTML = "Start";
+				}
+			else {
+				timer.start();
+				this.innerHTML = "Pause";
+				}
+			});
+		$("#reset-timer").click(function() {
+			timer.reset();
+			$("#change-timer").html("Start");
+			});
+
+		// var timer = new ProgressBar.Circle("#timer", {
+		// 	color: "#FCB03C",
+		// 	trailColor: "#ddd",
+		// 	trailWidth: 1,
+		// 	duration: 100,
+		// 	easing: 'linear',
+		// 	strokeWidth: 5,
+		// 	});
+
+		// $("#timer").click(function() {
+		// 	timer.set(totalSeconds / 60);
+		// 	var secondsElapsed = 0;
+		// 	setInterval(function() {
+		// 		secondsElapsed++;
+		// 		timer.animate((totalSeconds - secondsElapsed) / totalSeconds, function() {
+		// 			timer.setText(totalSeconds - secondsElapsed);
+		// 			});
+		// 			}, 1000);
+		// 		}
+		//	);
+	</script>
+{% endblock %}

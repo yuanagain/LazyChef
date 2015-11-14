@@ -1,11 +1,2 @@
-/* Basic */
-
-	body, input, select, textarea {
-		font-size: 13pt;
-	}
-
-/* Banner */
-
-	#banner {
-		padding: 10em 0 18em 0;
-	}
+body,input,select,textarea{font-size:13pt}#banner{padding:10em 0 18em 0}
+/*# sourceMappingURL=style-wide.css.map */
