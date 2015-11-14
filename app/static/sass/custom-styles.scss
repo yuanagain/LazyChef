@@ -21,6 +21,10 @@ row>* {
 		}
 	}
 
+.icons {
+	display: none;
+	}
+
 .center {
 	text-align: center;
 	margin-left: auto;
@@ -62,6 +66,13 @@ row>* {
 	padding-bottom: 1em;
 	}
 
+.background-image {
+	z-index: -1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	}
+
 #bottom-display {
 	background-color: #507191;
 	color: white;
@@ -88,10 +99,21 @@ row>* {
 	padding-top: 1em;
 	}
 
+#header {
+	display: none;
+	}
+
 #background-tasks {
 	:nth-child(n+5) {
 		display: none !important;
 		}
+	}
+
+#logo {
+	height: 3em;
+	position: absolute;
+	left: 1em;
+	top: 1em;
 	}
 
 @media #{$mobile} {

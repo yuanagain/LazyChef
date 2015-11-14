@@ -11,5 +11,5 @@ class FlaskSettings(object):
 	PREFERRED_URL_SCHEME = "http://"
 
 VIEW_GLOBALS = {
-	"name": "LazyChef"
+	"name": "Lazy Chef"
 	}
