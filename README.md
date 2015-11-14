@@ -45,7 +45,5 @@ Lazy Chef was implemented in Python and Javascript. Thorough documentation for t
 * Skillwise Personalization: Specify how long it takes you to perform each task!
 
 ## Credits
-Icon made by http://www.flaticon.com/authors/hand-drawn-goods from www.flaticon.com
+Icon made by [Hand Drawn Goods](http://www.flaticon.com/authors/hand-drawn-goods) from www.flaticon.com
 
-http://www.flaticon.com/authors/hand-drawn-goods - automatic!
-[Hand Drawn Goods](http://www.flaticon.com/authors/hand-drawn-goods)
