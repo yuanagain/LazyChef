@@ -1,5 +1,0 @@
-Oven Heated
-Oven is Preheating
-0
-60
-Preheat Oven
