@@ -1,0 +1,6 @@
+boil_water
+bring_water_to_a_boil
+0
+300
+add_salt
+pot_on_stove
