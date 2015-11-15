@@ -135,11 +135,13 @@ def initializeRecipe():
            DG_dense[i][j] = 1  
 
     #Symmetrically flip DG_dense about diagonal to reverse Digraph
-    #DG_dense_rev = np.zeros(numTasks)
-    #for i in range(0, numTasks[0]):
-    #    for j in range(0, numTasks[0]):
-    #        DG_dense_rev[i][j] = DG_dense[j][i]
+    DG_dense_rev = np.zeros(numTasks)
+    for i in range(0, numTasks[0]):
+        for j in range(0, numTasks[0]):
+            DG_dense_rev[i][j] = DG_dense[j][i]
 
+    DG_dense = DG_dense_rev
+    print(DG_dense_rev)
     #DG_sparse = csr_matrix(DG_dense)
     #return DG_sparse
 
