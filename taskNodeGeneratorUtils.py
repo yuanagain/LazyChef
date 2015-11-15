@@ -54,6 +54,8 @@ dump_file(self, outFile = None, show = True):
 III. EXAMPLE USAGE:
 ============================================================
 import taskNodeGeneratorUtils as tnUtils
+from taskNodeGeneratorUtils import recipeLibrary
+
 recipe_lib = tnUtils.recipeLibrary()
 target = ['Boil Water', 'Pasta']
 node_list = recipe_lib.extract_list(target)
@@ -263,6 +265,17 @@ def clean_list(node_list):
         return node_list[:-1]
     return node_list
 
+def get_ingredients(node_list):
+    '''
+    get list of ingredients for a node list
+    '''
+    ingredients = []
+    for node in node_list:
+        if len(node.depends) >= 1 and node.depends[0] == 0 and node.task_str != "done":
+            ingredients.append(node.task_str)
+
+    return ingredients
+
 def main():
 
     print("==== TESTING CONSTRUCTOR ==== ")
@@ -291,7 +304,7 @@ def main():
         if node.depends[0] == 0:
             print(node.task_str)
 
-    print(node_list[1].depends)
+    print(node_list[0].depends)
 
 if __name__ == "__main__":
     main()

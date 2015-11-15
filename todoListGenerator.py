@@ -17,7 +17,16 @@ II. EXAMPLE USAGE:
 I. USEFUL METHODS
 ============================================================
 
-def tnodelist_tojson(tnode_list, out_fname = None):
+tnodelist_todict(tnode_list):
+    Parameters:
+    ------
+    Takes a list of TaskNodes and returns a dict of ordered tasks
+    ------
+    tnode_list : TaskNode[]
+        A list of TaskNodes
+
+
+tnodelist_tojson(tnode_list, out_fname = None):
     Parameters:
     ------
     Takes a list of TaskNodes and produces a json file at out_fname
@@ -102,6 +111,21 @@ def createTask(tnode, current_time = 0.0):
     task_dict['description'] = tnode.task_desc
 
     return task_dict
+
+def tnodelist_todict(tnode_list):
+    """
+    Parameters:
+    ------
+    Takes a list of TaskNodes and returns a dict of ordered tasks
+    ------
+    tnode_list : TaskNode[]
+        A list of TaskNodes
+
+    """
+
+    task_pack = generate_todo_list(tnode_list)
+
+    return task_pack
 
 def tnodelist_tojson(tnode_list, out_fname = None):
     """
