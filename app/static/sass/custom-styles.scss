@@ -66,6 +66,10 @@ row>* {
 	padding-bottom: 1em;
 	}
 
+body {
+	overflow-x: hidden;
+	}
+
 .background-image {
 	z-index: -1;
 	position: absolute;
@@ -114,6 +118,43 @@ row>* {
 	position: absolute;
 	left: 1em;
 	top: 1em;
+	}
+
+#submit-button, #print-button {
+	height: 4em;
+	float: right;
+	padding-right: 1em;
+	}
+
+.title-display {
+	background-color: rgba(132, 132, 132, 0.5);
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	padding: 1em;
+
+	.title {
+		color: white;
+		}
+	}
+
+.food-select {
+	&.right {
+		float: right;
+		}
+	&.left {
+		float: left;
+		}
+	&:before {
+		content: '';
+		background: transparent;
+		border-color: inherit;
+		}
+	&:focus {
+		border-color: inherit;
+		}
+	&:checked {
+		background-color: white;
+		}
 	}
 
 @media #{$mobile} {

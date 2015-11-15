@@ -1,0 +1,39 @@
+{% extends "page.html" %}
+{% block content %}
+	<section id="main" class = "container">
+		<img src="/static/images/timer_background.png" class = "background-image" alt="">
+		<div class="container">
+			<form method = "POST" action = "/submit/">
+			<div class="row title-display">
+				<div class="7u"><h2 class = "title">Recipe Selection</h2></div>
+				<div class="5u">
+					<input type="image" name="submit" src = "/static/images/generate_meal.png" id = "submit-button">
+				</div>
+			</div>
+			<div class="row" id = "main-display">
+				<div class="12u$">
+					<h3>Appetizers</h3>
+					{% for appetizer in appetizers %}
+						<input type="checkbox" name="choice" value = "{{ appetizer }}" class = "food-select {{ loop.cycle('left', 'right') }}" id = "appetizer-{{ appetizer }}">
+						<label for="appetizer-{{ appetizer }}">{{ appetizer }}</label><br/>
+					{% endfor %}
+				</div>
+				<div class="12u$">
+					<h3>Main Course</h3>
+					{% for course in main_courses %}
+						<input type="checkbox" name = "choice" value = "{{ course }}" class = "food-select {{ loop.cycle('left', 'right') }}" id = "course-{{ course }}">
+						<label for="course-{{ course }}">{{ course }}</label><br/>
+					{% endfor %}
+				</div>
+				<div class="12u$">
+					<h3>Desserts</h3>
+					{% for dessert in desserts %}
+						<input type="checkbox" name="choice" value = "{{ dessert }}" class = "food-select {{ loop.cycle('left', 'right') }}" id = "dessert-{{ dessert }}">
+						<label for="dessert-{{ dessert }}">{{ dessert }}</label><br/>
+					{% endfor %}
+				</div>
+			</div>
+			</form>
+		</div>
+	</section>
+{% endblock %}

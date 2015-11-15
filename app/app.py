@@ -2,7 +2,7 @@
 # HackPrinceton 2015
 # app/app.py
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for, redirect, session
 
 import config
 
@@ -29,16 +29,38 @@ class Server(Flask):
 
 	def configureRoutes(self):
 		'''Configure the routes for the server'''
-		@self.route("/index/")
-		@self.route("/")
-		def index():
-			'''GET index page'''
-			return render_template("index.html")
+		# @self.route("/index/")
+		# @self.route("/")
+		# def index():
+		# 	'''GET index page'''
+		# 	return render_template("index.html")
 
-		@self.route("/contact/")
-		def contact():
-			'''GET the contact page'''
-			return render_template("contact.html")
+		# @self.route("/contact/")
+		# def contact():
+		# 	'''GET the contact page'''
+		# 	return render_template("contact.html")
+
+		@self.route("/recipe-selection/")
+		def recipe_selection():
+			'''GET recipe selection page'''
+			return render_template("selection.html", appetizers = ["water", "more water"], main_courses = ["Pasta", "Chicken", "Burger"], desserts = ["Chocolate", "Ice Cream"])
+
+		@self.route("/submit/", methods = ["POST"])
+		def post_recipes():
+			'''POST recipes from the user'''
+			session["choices"] = request.form.getlist("choice")
+			# TODO: get recipe_data from rest of application, including walmart integration
+			recipe_data = {"walmart": {
+				
+				}}
+			# recipe_data should contain two keys: "walmart" with walmart data
+			# and "data" with data for timers pages
+			return render_template("ingredients.html", data = recipe_data)
+
+		@self.route("/timers/", methods = ["POST"])
+		def post_timers():
+			'''POST timers page'''
+			return render_template("timer.html", recipe_data = request.form.get("recipe_data", []), recipes = session.get("choices", []))
 
 		@self.route("/demo/")
 		def demo():
