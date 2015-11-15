@@ -286,7 +286,7 @@ def clean_list(node_list):
     """ 
     cleans out anomaly end node
     """
-    if node_list[-1] != node_list[-1].id:
+    if (len(node_list) - 1) != node_list[-1].id:
         return node_list[:-1]
     return node_list
 
@@ -294,7 +294,7 @@ def main():
 
     print("==== TESTING CONSTRUCTOR ==== ")
 
-    target = ['Boil Water', 'Pasta']
+    target = ['Boil Water', 'Cook Pasta']
 
     lib = recipeLibrary(def_list_dir = './test_recipes/')
     print("SUCCESS")
