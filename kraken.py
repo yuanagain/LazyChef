@@ -116,7 +116,7 @@ def main2():
 
 def main():
 	fg = KRAKEN("./recipes_demo/")
-	tg = ['Mix Cheese In', 'Bake Potatoes']
+	tg = ['Bake Potatoes', 'Potatoes']
 	print(fg.produce_dict(tg))
 
 if __name__ == "__main__":
