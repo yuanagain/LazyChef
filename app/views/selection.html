@@ -12,24 +12,10 @@
 			</div>
 			<div class="row" id = "main-display">
 				<div class="12u$">
-					<h3>Appetizers</h3>
-					{% for appetizer in appetizers %}
-						<input type="checkbox" name="choice" value = "{{ appetizer }}" class = "food-select {{ loop.cycle('left', 'right') }}" id = "appetizer-{{ appetizer }}">
-						<label for="appetizer-{{ appetizer }}">{{ appetizer }}</label><br/>
-					{% endfor %}
-				</div>
-				<div class="12u$">
-					<h3>Main Course</h3>
-					{% for course in main_courses %}
-						<input type="checkbox" name = "choice" value = "{{ course }}" class = "food-select {{ loop.cycle('left', 'right') }}" id = "course-{{ course }}">
-						<label for="course-{{ course }}">{{ course }}</label><br/>
-					{% endfor %}
-				</div>
-				<div class="12u$">
-					<h3>Desserts</h3>
-					{% for dessert in desserts %}
-						<input type="checkbox" name="choice" value = "{{ dessert }}" class = "food-select {{ loop.cycle('left', 'right') }}" id = "dessert-{{ dessert }}">
-						<label for="dessert-{{ dessert }}">{{ dessert }}</label><br/>
+					<h3>Recipes</h3>
+					{% for recipe in recipes %}
+						<input type="checkbox" name="choice" value = "{{ recipe }}" class = "food-select {{ loop.cycle('left', 'right') }}" id = "recipe-{{ recipe }}">
+						<label for="recipe-{{ recipe }}">{{ recipe }}</label><br/>
 					{% endfor %}
 				</div>
 			</div>
