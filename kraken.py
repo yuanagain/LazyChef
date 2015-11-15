@@ -42,7 +42,7 @@ produce_dict(self, target):
 ============================================================
 III. EXAMPLE USAGE:
 ============================================================
-from do_it_to_it import KRAKEN
+from kraken import KRAKEN
 fg = KRAKEN()
 tg = ['Boil Water', 'Pasta']
 print(fg.produce_dict(tg))
@@ -59,7 +59,7 @@ from taskNodeGeneratorUtils import recipeLibrary
 
 
 class KRAKEN:
-	def __init__(self, recipe_src = './test_recipes/'):
+	def __init__(self, recipe_src = './recipe_files/'):
 		self.rlibs = recipeLibrary(recipe_src)
 
 
@@ -86,6 +86,20 @@ class KRAKEN:
 		tasklist = bf.maximizer(tlist)
 
 		return tdlg.tnodelist_todict(tasklist)
+
+	def get_ingredients(self, target):
+		"""
+		Description:
+		-------
+		Get ingredients required for the target
+
+		Parameters:
+		-------
+		target : list
+			A list of recipes we desire to find ingredients for
+		"""
+		tlist = self.rlibs.extract_list(target)
+		return taskNodeGeneratorUtils.get_ingredients(tlist)
 
 def main2():
 	# create recipeLibrary
