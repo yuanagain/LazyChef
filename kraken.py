@@ -47,7 +47,6 @@ fg = KRAKEN()
 tg = ['Boil Water', 'Pasta']
 print(fg.produce_dict(tg))
 
-
 Author: Yuan Wang
 Contact/Support: yuanw@princeton.edu
 """
@@ -116,8 +115,8 @@ def main2():
 	tdlg.tnodelist_tojson(tasklist, out_fname = './example.json')
 
 def main():
-	fg = KRAKEN()
-	tg = ['Boil Water', 'Pasta']
+	fg = KRAKEN("./recipes_demo/")
+	tg = ['Mix Cheese In', 'Bake Potatoes']
 	print(fg.produce_dict(tg))
 
 if __name__ == "__main__":
