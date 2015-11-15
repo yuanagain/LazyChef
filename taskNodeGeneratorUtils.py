@@ -1,30 +1,22 @@
 """
 This module provides classes for loading a library of recipes.
-
 CONTENTS:
 ============================================================
 I. CLASSES
-
 II. USEFUL METHODS
-
 III. EXAMPLE USAGE:
 ============================================================
-
 ============================================================
 I. CLASSES
 ============================================================
-
 class recipeLibrary():
-
 Description:
 A library that loads defintions from disk and allows for extraction of
 lists of tasks upon which the optimizer can act
-
 ============================================================
 II. USEFUL METHODS
 ============================================================
     
-
 __init__(self, def_list_dir = './recipe_files/'):
     Description:
     ------
@@ -33,66 +25,43 @@ __init__(self, def_list_dir = './recipe_files/'):
     Parameters
     ------
     def_list_dir : fname (default =  ./recipe_files/')
-
         A list of defintion
-
-
 extract_list(self, recipes):
     Description:
     ------
     Returns node_list of task nodes required to produce all tasks in recipes.
-
     The node_list follows the following rules
-
         node_list[0] := start TaskNode, upon which all ingredients depend
         node_list[1] := done TaskNode, which depends upon each recipe in recipes
-
         for K > 1
         node_list[ K ] := kth TaskNode required for completion
-
     Parameters
     ------
     recipes : list
         A list of recipes task_str's that must be completes
-
-
 dump_file(self, outFile = None, show = True):
     Description:
     ------
     Writes library to JSON
-
     Parameters:
     ------
     outFile : filename (default = None)
         The destination of the data dump. Defaults to ./tasks_out/tasklist
         if outFile is not specified
-
     show : boolean (default = True)
         If True, prints contents to screen as well
-
 ============================================================
 III. EXAMPLE USAGE:
 ============================================================
-
 import taskNodeGeneratorUtils as tnUtils
-
 recipe_lib = tnUtils.recipeLibrary()
-
 target = ['Boil Water', 'Pasta']
-
 node_list = recipe_lib.extract_list(target)
 ...
 Sort node_list via optimizaiton methods
 ...
-
-
-
-
-
-
 Author: Yuan Wang
 Contact/Support: yuanw@princeton.edu
-
 """
 import sys
 import os
@@ -155,13 +124,11 @@ class recipeLibrary():
         Description:
         ------
         Writes library to JSON
-
         Parameters:
         ------
         outFile : filename (default = None)
             The destination of the data dump. Defaults to ./tasks_out/tasklist
             if outFile is not specified
-
         show : boolean (default = True)
             If True, prints contents to screen as well
         """
@@ -169,28 +136,17 @@ class recipeLibrary():
         if show:
             os.system("cat " + outFile)
 
-    def extract_list(self, recipes):
-        relevant_list = self.extract_list_v1(recipes)
-        for node in relevant_list:
-            if node.id == 1: continue
-            if (n_contains(node.depends, 1)): continue
-            node.depends.append(1)
-        return relevant_list
 
-    def extract_list_v1(self, recipes):
+    def extract_list(self, recipes):
         """
         Description:
         ------
         Returns node_list of task nodes required to produce all tasks in recipes.
-
         The node_list follows the following rules
-
             node_list[0] := start TaskNode, upon which all ingredients depend
             node_list[1] := done TaskNode, which depends upon each recipe in recipes
-
             for K > 1
             node_list[ K ] := kth TaskNode required for completion
-
         Parameters
         ------
         recipes : list
@@ -255,14 +211,20 @@ class recipeLibrary():
             new_node.depends = [renumerate[dpd] for dpd in new_node.depends]
 
             # connect all raw ingredients to start node
-            #if len(new_node.depends) == 0:
-                #new_node.depends.append(0)
+            if len(new_node.depends) == 0:
+                new_node.depends.append(0)
 
             relevant_list.append(new_node)
 
-        return clean_list(relevant_list)
+        out_list = clean_list(relevant_list)
+        return self.list_mods(out_list)
 
-        
+    def list_mods(self, out_list):
+        out_list[1].depends = []
+        for i in range(len(out_list)):
+            if i == 1: continue
+            out_list[1].depends.append(i)
+        return out_list
 
     def find_relevant(self, node, relevant_nodes):
         """
@@ -292,12 +254,6 @@ def print_nodelist(node_list, validate = False):
                 print(node.depends)
                 print("=========")
         print(node.task_str)
-
-def n_contains(key_list, key):
-    for i in key_list:
-        if key_list == key:
-            return True
-    return False
 
 def clean_list(node_list):
     """ 
@@ -334,9 +290,8 @@ def main():
         node = node_list[i]
         if node.depends[0] == 0:
             print(node.task_str)
-    for node in node_list:
-        print(node.task_str)
-        print(node.depends)
+
+    print(node_list[1].depends)
 
 if __name__ == "__main__":
     main()
