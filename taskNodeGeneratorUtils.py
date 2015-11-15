@@ -232,7 +232,7 @@ class recipeLibrary():
         ## Apply mapping, populate list
         start_node.id = 0
         done_node.id = 1
-        
+
         done_node.depends = [renumerate[dpd] for dpd in done_node.depends]
         relevant_list = [start_node, done_node]
 
