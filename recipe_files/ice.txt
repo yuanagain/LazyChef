@@ -1,4 +1,4 @@
 Ice
-Pour ice into glass
-5
+Ingredient
+0
 0
