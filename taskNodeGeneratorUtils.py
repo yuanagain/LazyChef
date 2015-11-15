@@ -255,8 +255,8 @@ class recipeLibrary():
             new_node.depends = [renumerate[dpd] for dpd in new_node.depends]
 
             # connect all raw ingredients to start node
-            if len(new_node.depends) == 0:
-                new_node.depends.append(0)
+            #if len(new_node.depends) == 0:
+                #new_node.depends.append(0)
 
             relevant_list.append(new_node)
 
@@ -334,6 +334,9 @@ def main():
         node = node_list[i]
         if node.depends[0] == 0:
             print(node.task_str)
+    for node in node_list:
+        print(node.task_str)
+        print(node.depends)
 
 if __name__ == "__main__":
     main()
