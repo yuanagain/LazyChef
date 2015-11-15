@@ -20,6 +20,14 @@ function LazyChef(data) {
 			}
 		});
 
+	$("#start-timers").click(function() {
+		if (! timer.isRunning()) {
+			timer.start();
+			$(this).remove();
+			$("#control-play i").get(0).className = "fa fa-pause";
+			}
+		});
+
 	timer.secondHook(0, updateActive);
 
 	var passiveTemplate = document.getElementById("passive-task-nth");
@@ -32,6 +40,7 @@ function LazyChef(data) {
 	for (var passiveIndex = 0; passiveIndex < data.passive.length; passiveIndex++) {
 		var passiveTask = data.passive[passiveIndex];
 		// this function hack is needed because we're iteratively creating functions
+		if (passiveTask.time_delta == 0) continue;
 		(function(passiveTask, passiveIndex) {
 			timer.secondHook(passiveTask.start_time, function() {
 				// create DOM to display as clone of a mock template
@@ -75,6 +84,9 @@ function LazyChef(data) {
 			else {
 				$("#name").html("");
 				$("#description").html("");
+				$("#done-notification").css("display", "block");
+				$("#active-task-timer").remove();
+				$("#control-play i").remove();
 				}
 			});
 		}

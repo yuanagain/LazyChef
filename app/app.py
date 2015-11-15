@@ -25,7 +25,7 @@ class Server(Flask):
 		self.config.from_object(configPath)
 		self.jinja_env.globals["site"] = config.VIEW_GLOBALS
 
-		self.kraken = kraken.KRAKEN("../recipe_files/")
+		self.kraken = kraken.KRAKEN("../recipes_main/")
 
 	def shutdown(self): # not used as of now, need OS signal handling to do this
 		'''Shuts down the Flask server'''
@@ -53,37 +53,42 @@ class Server(Flask):
 		@self.route("/")
 		def recipe_selection():
 			'''GET recipe selection page'''
-			return render_template("selection.html", appetizers = ["water", "more water"], main_courses = ["Pasta", "Chicken", "Burger"], desserts = ["Chocolate", "Ice Cream"])
+			return render_template("selection.html", recipes = ["Baked Potato"])
 
 		@self.route("/submit/", methods = ["POST"])
 		def post_recipes():
 			'''POST recipes from the user'''
 			session["choices"] = request.form.getlist("choice")
-			ingredients = kraken.get_ingredients(session["choices"])
+			ingredients = self.kraken.get_ingredients(session["choices"])
 			walmartItems = walmartJSON.getIngredientInformation(ingredients)
 
+			totalPrice = 0
 			walmartCategories = {}
 			for item in walmartItems:
-				category = item["categoryPath"]
-				if not category in walmartCategories:
-					walmartCategories[category] = []
-				walmartCategories[category].append(item)
+				if item["salePrice"] <= 1000:
+					# if the item is more than $1000, it's probably a bug
+					# i.e getting an oven
+					category = item["categoryPath"]
+					if not category in walmartCategories:
+						walmartCategories[category] = []
+					walmartCategories[category].append(item)
+					totalPrice += item["salePrice"]
 
 			# recipe_data should contain two keys: "walmart" with walmart data
 			# and "data" with data for timers pages
-			return render_template("ingredients.html", walmart = walmartCategories)
+			return render_template("ingredients.html", walmart = walmartCategories, total = totalPrice)
 
 		@self.route("/timers/")
 		def post_timers():
 			'''POST timers page'''
 			choices = session.get("choices", [])
-			recipe_data = kraken.produce_dict(choices)
+			recipe_data = self.kraken.produce_dict(choices)
 			return render_template("timer.html", recipe_data = recipe_data, recipes = choices)
 
 		@self.route("/demo/")
 		def demo():
 			'''GET demo page'''
-			return render_template("timer.html", recipe_data = {"active": [{"start_time": 0.0, "description": "Put water in pot. Put pot on stove", "name": "Put water on stove", "end_time": 5.0, "time_delta": 5}, {"start_time": 5.0, "description": "Add salt to water", "name": "Add salt", "end_time": 15, "time_delta": 10}, {"start_time": 15.0, "description": "Add pasta to boiling water", "name": "Put pasta in water", "end_time": 25.0, "time_delta": 10}, {"start_time": 25.0, "description": "Dice Tomatoes into small cubes", "name": "Dice Tomatoes", "end_time": 35.0, "time_delta": 10}, {"start_time": 35.0, "description": "Drain pasta using a strainer", "name": "Drain pasta", "end_time": 50.0, "time_delta": 15}, {"start_time": 50.0, "description": "Cover the pasta with Tomatoes", "name": "Put Tomatoes in pasta", "end_time": 55.0, "time_delta": 5}], "passive": [{"name":"Boiling Water\n","end_time":7.0,"start_time":0.0,"descripton":"Bring cold water to a boil\n","time_delta":7.0},{"name":"Pasta\n","end_time":120.0,"start_time":120.0,"descripton":"Ingredient\n","time_delta":0.0},{"name":"Water\n","end_time":120.0,"start_time":120.0,"descripton":"Ingredient\n","time_delta":0.0}, {"start_time": 2.0, "end_time": 30.0, "time_delta": 28.0, "name": "Sautee onions", "description": "none"},{"name":"Boiling Water\n","end_time":9.0,"start_time":0.0,"descripton":"Bring cold water to a boil\n","time_delta":9.0},{"name":"Boiling Water\n","end_time":10.0,"start_time":0.0,"descripton":"Bring cold water to a boil\n","time_delta":10.0}]}, recipes = ["Pasta", "Hot Water"])
+			return render_template("timer.html", recipe_data = {"active": [{"start_time": 0.0, "description": "Put water in pot. Put pot on stove", "name": "Put water on stove", "end_time": 5.0, "time_delta": 5}, {"start_time": 5.0, "description": "Add salt to water", "name": "Add salt", "end_time": 15, "time_delta": 10}, {"start_time": 15.0, "description": "Add pasta to boiling water", "name": "Put pasta in water", "end_time": 25.0, "time_delta": 10}, {"start_time": 25.0, "description": "Dice Tomatoes into small cubes", "name": "Dice Tomatoes", "end_time": 35.0, "time_delta": 10}, {"start_time": 35.0, "description": "Drain pasta using a strainer", "name": "Drain pasta", "end_time": 50.0, "time_delta": 15}, {"start_time": 50.0, "description": "Cover the pasta with Tomatoes", "name": "Put Tomatoes in pasta", "end_time": 55.0, "time_delta": 5}], "passive": [{"name":"Boiling Water\n","end_time":7.0,"start_time":0.0,"descripton":"Bring cold water to a boil\n","time_delta":7.0},{"name":"Pasta\n","end_time":120.0,"start_time":120.0,"descripton":"Ingredient\n","time_delta":0.0},{"name":"Water\n","end_time":120.0,"start_time":120.0,"descripton":"Ingredient\n","time_delta":0.0}, {"start_time": 2.0, "end_time": 30.0, "time_delta": 28.0, "name": "Watch pasta", "description": "none"}]}, recipes = ["Pasta", "Hot Water"])
 
 if __name__ == '__main__':
 	main()

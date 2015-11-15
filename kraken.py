@@ -100,6 +100,25 @@ class KRAKEN:
 		tlist = self.rlibs.extract_list(target)
 		return taskNodeGeneratorUtils.get_ingredients(tlist)
 
+	def produce_dict_graph(self, target):
+		"""
+		Description:
+		------
+		Returns dict of tasks corresponding to target
+
+		Parameters:
+		------
+		target : list
+			A list of recipes we desire to complete
+		"""
+		# tlist = self.rlibs.extract_list(target)
+
+		## YOUR CODE HERE
+		#taskList = optimize recipe
+
+		return tdlg.tnodelist_todict(taskList)
+
+
 def main2():
 	# create recipeLibrary
 	rlibs = recipeLibrary('./test_recipes/')
@@ -115,8 +134,8 @@ def main2():
 	tdlg.tnodelist_tojson(tasklist, out_fname = './example.json')
 
 def main():
-	fg = KRAKEN("./recipes_demo/")
-	tg = ['Bake Potatoes', 'Potatoes']
+	fg = KRAKEN("./recipes_basic_yw/")
+	tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
 	print(fg.produce_dict(tg))
 
 if __name__ == "__main__":
