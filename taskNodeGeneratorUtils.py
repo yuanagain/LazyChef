@@ -169,8 +169,15 @@ class recipeLibrary():
         if show:
             os.system("cat " + outFile)
 
-
     def extract_list(self, recipes):
+        relevant_list = self.extract_list_v1(recipes)
+        for node in relevant_list:
+            if node.id == 1: continue
+            if (n_contains(node.depends, 1)): continue
+            node.depends.append(1)
+        return relevant_list
+
+    def extract_list_v1(self, recipes):
         """
         Description:
         ------
@@ -285,6 +292,12 @@ def print_nodelist(node_list, validate = False):
                 print(node.depends)
                 print("=========")
         print(node.task_str)
+
+def n_contains(key_list, key):
+    for i in key_list:
+        if key_list == key:
+            return True
+    return False
 
 def clean_list(node_list):
     """ 
