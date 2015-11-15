@@ -47,13 +47,24 @@ Module Main:
 from Queue import PriorityQueue
 import numpy as np
 from tnode import TaskNode
+import taskNodeGeneratorUtils as tnUtils
+from taskNodeGeneratorUtils import recipeLibrary
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import breadth_first_order
 from scipy.sparse.csgraph import connected_components
 
+#Target recipe name
+target = ['Boil Water', 'Pasta']
+
+#Create recipe library
+recipe_lib = recipeLibrary('./test_recipes/')
+
+#Node List
+node_list = recipe_lib.extract_list(target)
+
 #Potential TODO (catch exception where recipe is empty)
 #numTasks =(0,0)
-numTasks = (10,10)
+numTasks = (len(node_list),len(node_list))
 DG_dense = np.zeros(numTasks)
 recipe_out = []
 
@@ -71,6 +82,7 @@ global_time = 0.0
 dct = dict()
 
 def initializeRecipe():
+    '''
     Tnode0 = TaskNode(0,0,0,np.array([1,2,3,4,9]), \
                     'start', \
                     'startNode')
@@ -113,10 +125,11 @@ def initializeRecipe():
     dct[7] = Tnode7
     dct[8] = Tnode8
     dct[9] = Tnode9
+    '''
     for i in range(0,numTasks[0]):
     #    extract params
     #    Tnode = TaskNode(params)
-    #    dct[i] = Tnode
+        dct[i] = node_list[i]
         for k in range(0,len(dct[i].depends)):
            j = dct[i].depends[k]
            DG_dense[i][j] = 1  
