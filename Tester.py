@@ -54,16 +54,23 @@ from scipy.sparse.csgraph import breadth_first_order
 from scipy.sparse.csgraph import connected_components
 
 #Target recipe name
-target = ['Boil Water', 'Pasta']
+target = ['done']
 
 #Create recipe library
 recipe_lib = recipeLibrary('./test_recipes/')
 
 #Node List
 node_list = recipe_lib.extract_list(target)
-
+'''
+for i in range(0, len(node_list)):
+    print(node_list[i].id)
+    print(node_list[i].depends)
+    print(node_list[i].state)
+    print(node_list[i].task_str)
+    print("================")
+'''
 #Potential TODO (catch exception where recipe is empty)
-#numTasks =(0,0)
+#numTasks =(10,10)
 numTasks = (len(node_list),len(node_list))
 DG_dense = np.zeros(numTasks)
 recipe_out = []
@@ -82,6 +89,7 @@ global_time = 0.0
 dct = dict()
 
 def initializeRecipe():
+    global DG_dense
     '''
     Tnode0 = TaskNode(0,0,0,np.array([1,2,3,4,9]), \
                     'start', \
@@ -127,13 +135,13 @@ def initializeRecipe():
     dct[9] = Tnode9
     '''
     for i in range(0,numTasks[0]):
-    #    extract params
-    #    Tnode = TaskNode(params)
         dct[i] = node_list[i]
+        #print(dct[i].depends)
         for k in range(0,len(dct[i].depends)):
            j = dct[i].depends[k]
            DG_dense[i][j] = 1  
 
+    #print(DG_dense)
     #Symmetrically flip DG_dense about diagonal to reverse Digraph
     DG_dense_rev = np.zeros(numTasks)
     for i in range(0, numTasks[0]):
@@ -141,25 +149,64 @@ def initializeRecipe():
             DG_dense_rev[i][j] = DG_dense[j][i]
 
     DG_dense = DG_dense_rev
-    print(DG_dense_rev)
-    #DG_sparse = csr_matrix(DG_dense)
-    #return DG_sparse
+    #print(DG_dense)
+    
+    #temp = np.zeros(numTasks[0])
+    #for i in range(0, numTasks[0]):
+    #    temp[i] = DG_dense[i][1]
+    #    DG_dense[i][1] = DG_dense[i][numTasks[0]-1]
+    #    DG_dense[i][numTasks[0]-1] = temp[i]
 
+    #temp = DG_dense[:,1]
+    #print(temp)
+    #DG_dense[:,1] = DG_dense[:,numTasks[0]-1]
+    #for i in range(0,numTasks[0]):
+    #    DG_dense[i,numTasks[0]-1] = temp.transpose()[i]
+    #    print(temp[i])
+    #print("======================")
+    #print(DG_dense)
+
+    for j in range(0, numTasks[0]):
+        newDep = []
+        for i in range(0, numTasks[0]):
+            if DG_dense[j][i] == 1:
+                newDep.append(i) 
+        dct[j].depends = newDep
+        #print ("newdep of = " + str(j) )
+        #print(newDep)
+
+    #for i in range(0, numTasks[0]):
+    #    print(i)
+    #    print(dct[i].depends)
+    #tempnode = dct[1]
+    #dct[1] = dct[numTasks[0]-1]
+    #dct[numTasks[0]-1] = tempnode     
+    dct[0].state = "complete"
+    
+    print("+++++++++++++++++++++++++")
+    for i in range(0, len(node_list)):
+        print(dct[i].id)
+        print(dct[i].depends)
+        print(dct[i].state)
+        print(dct[i].task_str)
+        print("================")
+    
 def getNewlyAccesibleTasks(tnode):
     for i in tnode.depends:
         canPut = True
+        print("just completed = " + str(tnode.task_str))
         #print("Current possible dependencies are : ")
         #print(tnode.depends)       
         for j in range(0,numTasks[0]):
             if DG_dense[j][i] == 1:
                 #print("i is : " + str(i))
                 #print("j is : " + str(j))
-                #print(dct[j].state == "complete")
+                print(dct[j].state == "complete")
                 if dct[j].state != "complete":
                     canPut = False
         if canPut == True:
             PQ.put(dct[i])
-            #print("Just added " + dct[i].task_desc)
+            print("Just added " + dct[i].task_desc)
                     
     
 def optimizeRecipe():
@@ -168,6 +215,8 @@ def optimizeRecipe():
     while cTask.task_str != "done":
         getNewlyAccesibleTasks(cTask)
         cTask = PQ.get()
+        print("cTask")
+        print("new ctasl" + cTask.task_str)
         execute(cTask)
 
 def execute(tnode):
