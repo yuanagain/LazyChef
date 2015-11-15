@@ -111,12 +111,12 @@ class KRAKEN:
 		target : list
 			A list of recipes we desire to complete
 		"""
-		tlist = self.rlibs.extract_list(target)
+		# tlist = self.rlibs.extract_list(target)
 
 		## YOUR CODE HERE
-		#taskList = sorted(tlist)
+		#taskList = optimize recipe
 
-		return #tdlg.tnodelist_todict(taskList)
+		return tdlg.tnodelist_todict(taskList)
 
 
 def main2():
