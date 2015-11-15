@@ -261,7 +261,7 @@ class recipeLibrary():
         relevant_nodes.append(node.id)
 
         for index in node.depends:
-            self.find_relevant(self.tnode_list[index], relevant_nodes)
+            relevant_nodes = self.find_relevant(self.tnode_list[index], relevant_nodes)
 
         return relevant_nodes
 
@@ -318,15 +318,5 @@ def main():
         if node.depends[0] == 0:
             print(node.task_str)
 
-    #print(lib.str_to_node['Cook Pasta'].depends)
 if __name__ == "__main__":
     main()
-
-# TODO: create dictionary mapping id's to dependencies and vice versa
-
-# Create DONE taskNode, 10.00 second active time. 
-# Create bag of nodes, following dependencies
-# place DONE at beginning, recipes next, then along dependencies
-
-
-
