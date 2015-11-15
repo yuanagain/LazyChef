@@ -10,7 +10,7 @@ import sys, os
 sys.path.append(os.path.abspath(".."))
 
 import walmartJSON
-import taskNodeGeneratorUtils as tnUtils
+import kraken
 
 def main():
 	'''Create the server and start it'''
@@ -25,7 +25,7 @@ class Server(Flask):
 		self.config.from_object(configPath)
 		self.jinja_env.globals["site"] = config.VIEW_GLOBALS
 
-		self.recipe_lib = tnUtils.recipeLibrary("../recipe_files/")
+		self.kraken = kraken.KRAKEN("../recipe_files/")
 
 	def shutdown(self): # not used as of now, need OS signal handling to do this
 		'''Shuts down the Flask server'''
@@ -59,9 +59,7 @@ class Server(Flask):
 		def post_recipes():
 			'''POST recipes from the user'''
 			session["choices"] = request.form.getlist("choice")
-			ingredients = tnUtils.get_ingredients(
-				self.recipe_lib.extract_list(session["choices"]))
-			# ingredients = ["Pasta", "sauce", "chipotle", "onions", "juice", "buns", "ketchup"]
+			ingredients = kraken.get_ingredients(session["choices"])
 			walmartItems = walmartJSON.getIngredientInformation(ingredients)
 
 			walmartCategories = {}
@@ -78,8 +76,9 @@ class Server(Flask):
 		@self.route("/timers/")
 		def post_timers():
 			'''POST timers page'''
-			recipe_data = {}; # get from kraken
-			return render_template("timer.html", recipe_data = recipe_data, recipes = session.get("choices", []))
+			choices = session.get("choices", [])
+			recipe_data = kraken.produce_dict(choices)
+			return render_template("timer.html", recipe_data = recipe_data, recipes = choices)
 
 		@self.route("/demo/")
 		def demo():
