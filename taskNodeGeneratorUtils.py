@@ -199,7 +199,7 @@ class recipeLibrary():
         # create DONE node, with all desired recipes as dependency
         recipe_ids  = [self.str_to_index[el] for el in recipes]
 
-        done_node = TaskNode(-1, 0.0, 0.0, recipe_ids, "Done", "Nice work")
+        done_node = TaskNode(-1, 0.0, 0.0, recipe_ids, "done", "Nice work")
         node_list.append(done_node)
 
 
