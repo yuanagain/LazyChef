@@ -299,7 +299,7 @@ def main():
 
     target = ['Boil Water', 'Cook Pasta']
 
-    lib = recipeLibrary()
+    lib = recipeLibrary('./test_recipes/')
     print("SUCCESS")
     print("\n==== PRINTING LIBRARY ==== ")
     lib.print_library()
