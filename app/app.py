@@ -53,7 +53,7 @@ class Server(Flask):
 		@self.route("/")
 		def recipe_selection():
 			'''GET recipe selection page'''
-			return render_template("selection.html", recipes = ["Baked Potato"])
+			return render_template("selection.html", recipes = config.RECIPES)
 
 		@self.route("/submit/", methods = ["POST"])
 		def post_recipes():
