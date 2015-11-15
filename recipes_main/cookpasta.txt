@@ -1,6 +1,6 @@
 Cook Pasta
 Boil pasta in boiling water
-60
+10
 0
 Boiling Water
 Pasta

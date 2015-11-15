@@ -1,5 +1,5 @@
 Boiling Water
 Bring cold water to a boil
 0
-1200
+40
 Boil Water

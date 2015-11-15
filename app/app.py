@@ -5,6 +5,12 @@
 from flask import Flask, render_template, request, url_for, redirect, session
 
 import config
+import sys, os
+
+sys.path.append(os.path.abspath(".."))
+
+import walmartJSON
+import kraken
 
 def main():
 	'''Create the server and start it'''
@@ -18,6 +24,8 @@ class Server(Flask):
 		super(Server, self).__init__("HackPrinceton", *args, **kwargs)
 		self.config.from_object(configPath)
 		self.jinja_env.globals["site"] = config.VIEW_GLOBALS
+
+		self.kraken = kraken.KRAKEN("../recipe_files/")
 
 	def shutdown(self): # not used as of now, need OS signal handling to do this
 		'''Shuts down the Flask server'''
@@ -41,6 +49,8 @@ class Server(Flask):
 		# 	return render_template("contact.html")
 
 		@self.route("/recipe-selection/")
+		@self.route("/index/")
+		@self.route("/")
 		def recipe_selection():
 			'''GET recipe selection page'''
 			return render_template("selection.html", appetizers = ["water", "more water"], main_courses = ["Pasta", "Chicken", "Burger"], desserts = ["Chocolate", "Ice Cream"])
@@ -49,18 +59,26 @@ class Server(Flask):
 		def post_recipes():
 			'''POST recipes from the user'''
 			session["choices"] = request.form.getlist("choice")
-			# TODO: get recipe_data from rest of application, including walmart integration
-			recipe_data = {"walmart": {
-				
-				}}
+			ingredients = kraken.get_ingredients(session["choices"])
+			walmartItems = walmartJSON.getIngredientInformation(ingredients)
+
+			walmartCategories = {}
+			for item in walmartItems:
+				category = item["categoryPath"]
+				if not category in walmartCategories:
+					walmartCategories[category] = []
+				walmartCategories[category].append(item)
+
 			# recipe_data should contain two keys: "walmart" with walmart data
 			# and "data" with data for timers pages
-			return render_template("ingredients.html", data = recipe_data)
+			return render_template("ingredients.html", walmart = walmartCategories)
 
-		@self.route("/timers/", methods = ["POST"])
+		@self.route("/timers/")
 		def post_timers():
 			'''POST timers page'''
-			return render_template("timer.html", recipe_data = request.form.get("recipe_data", []), recipes = session.get("choices", []))
+			choices = session.get("choices", [])
+			recipe_data = kraken.produce_dict(choices)
+			return render_template("timer.html", recipe_data = recipe_data, recipes = choices)
 
 		@self.route("/demo/")
 		def demo():

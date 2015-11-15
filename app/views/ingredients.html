@@ -3,22 +3,34 @@
 	<section id="main" class = "container">
 		<img src="/static/images/ingredients_background.png" class = "background-image" alt="">
 		<div class="container">
-			<form method = "POST" action = "/timers/">
 			<div class="row title-display">
 				<div class="4u"><h2 class = "title">Ingredients</h2></div>
 				<div class="4u">
 					<input type="image" src = "/static/images/print_button.png" id = "print-button" onclick = "window.print(); return false;">
 				</div>
 				<div class="4u">
-					<input type="image" name="submit" src = "/static/images/continue_button.png" id = "submit-button">
-					<input type = "hidden" name = "recipe_data" value = "{{ recipe_data.get('data', []) if recipe_data else [] }}">
+					<a href = "/timers/"><img src="/static/images/continue_button.png" id = "submit-button" alt=""></a>
 				</div>
 			</div>
-			</form>
 			<div class="row" id = "main-display">
 				<div class="12u$">
-					
+					<img src="/static/images/check.png" alt="" class = "check-mark"> In Stock
 				</div>
+				<div class="12u$">
+					Walmart Store: <a href="https://www.walmart.com/store/3102" id = "store-location">Princeton Walmart</a>
+				</div>
+				{% for category in walmart %}
+					<div class="12u$">
+						<h3>{{ category }}</h3>
+						<ul class="no-bullets">
+							{% for item in walmart[category] %}
+							<li>
+							{% if item.stock %} <img src="/static/images/check.png" alt="" class = "check-mark"> {% endif %}
+							<a href="{{ item.productUrl }}">{{ item.name }} - ${{ item.salePrice }}</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 	</section>

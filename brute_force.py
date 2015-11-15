@@ -88,6 +88,7 @@ def maximizer(node_list):
 			champ = seq
 			first_valid_run = False
 			optimal_ordering = tlist
+			print("first solution found")
 
 			continue
 
@@ -115,6 +116,8 @@ def evaluate(node_list, ordering):
 	if ordering[0] != 0: return -1, None
 
 	if ordering[len(node_list) - 1] != 1: return -1, None
+
+
 
 	for i in ordering:
 		node = node_list[i]
