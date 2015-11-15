@@ -5,6 +5,11 @@
 from flask import Flask, render_template, request, url_for, redirect, session
 
 import config
+import sys, os
+
+sys.path.append(os.path.abspath(".."))
+
+import walmartJSON
 
 def main():
 	'''Create the server and start it'''
@@ -51,7 +56,7 @@ class Server(Flask):
 			session["choices"] = request.form.getlist("choice")
 			# TODO: get recipe_data from rest of application, including walmart integration
 			recipe_data = {"walmart": {
-				
+
 				}}
 			# recipe_data should contain two keys: "walmart" with walmart data
 			# and "data" with data for timers pages
