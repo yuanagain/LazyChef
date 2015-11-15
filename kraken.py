@@ -115,8 +115,8 @@ def main2():
 	tdlg.tnodelist_tojson(tasklist, out_fname = './example.json')
 
 def main():
-	fg = KRAKEN("./recipes_main/")
-	tg = ['Cook Pasta', 'Boil Water']
+	fg = KRAKEN("./recipes_basic_yw/")
+	tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
 	print(fg.produce_dict(tg))
 
 if __name__ == "__main__":

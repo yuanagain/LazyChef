@@ -76,8 +76,11 @@ def maximizer(node_list):
 
 	# iterate through permutations
 	permutations = create_iterations(rg, node_list)
+	#permutations = itertools.permutations(rg)
 	for seq in permutations:
 		#seq is a tuple
+		seq = tuple(seq)
+		#print(seq)
 
 		cost, tlist = evaluate(node_list, seq)
 
@@ -89,7 +92,6 @@ def maximizer(node_list):
 			first_valid_run = False
 			optimal_ordering = tlist
 			print("first solution found")
-
 			continue
 
 		# update champion
@@ -104,24 +106,21 @@ def create_iterations(rg, node_list):
 	# bubble ingredients to top
 	head = []
 	tail = []
-	head.append(node_list[0])
-	tail.append(node_list[-1])
-
-	marked1 = [False] * len(node_list)
-	marked1[0] = True
-	marked1[-1] = True
+	head.append(0)
+	tail.append(1)
 
 	# list of active tasks
 	atasks = []
+
+	# list of ingredients
 	ingredients = []
-	# where the last ingredient is placed
-	ingredient_marker = 1
-	for i in range(1, len(node_list) - 1):
+	
+	for i in range(2, len(node_list)):
 		node = node_list[i]
 		if isIngredient(node):
-			ingredients.append(node)
+			ingredients.append(i)
 		else: 
-			atasks.append(node)
+			atasks.append(i)
 
 	head = head + ingredients
 
@@ -147,9 +146,14 @@ class smart_premutes:
         return self.mids.next
 
 def isIngredient(node):
-	if len(node.depends) == 0: return True
+
+	if len(node.depends) == 0: 
+
+		return True
 	if len(node.depends) == 1:
-		if node.depends[0] == 0: return True
+		if node.depends[0] == 0: 
+			if node.act_time == 0.0:
+				return True
 
 	return False
 
@@ -207,7 +211,7 @@ def keyFunc(node):
 
 def main():
 	target = ['Boil Water', 'Pasta']
-	lib = recipeLibrary('./test_recipes/')
+	lib = recipeLibrary('./recipes_basic_yw/')
 
 	node_list = lib.extract_list(target)
 
