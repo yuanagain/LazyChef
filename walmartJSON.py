@@ -61,21 +61,20 @@ def getIngredientInformation(ingredients):
 	for ingredient in ingredients:
 		ingredient_json = getJSON("search?query={q}&format=json&apiKey={key}".format(q = ingredient, key = my_walmart_api_key))
 		tear = ingredient_json.get('items', [{}])[0]
-		id_list.append(tear.get('itemId'))
+		id_list.append(tear.get('itemId', ""))
 	# Create list of dictionary objects for ingredient info
 	info_list = []
 	# Get the information for each ingredient using Lookup API with itemId
-	for identity in id_list:
-		info_json = getJSON("items/{iden}?format=json&apiKey={key}".format(iden = identity, key = my_walmart_api_key))
+	info_all = getJSON("items?ids={ids}&format=json&apiKey={key}".format(ids = ",".join(map(str, id_list)), key = my_walmart_api_key))
+	for info_json in info_all.get("items", []):
 		info_data = {}
-		info_data['name'] = info_json.get('name')
-		info_data['stock'] = info_json.get('stock')
-		info_data['salePrice'] = info_json.get('salePrice')
-		info_data['categoryPath'] = info_json.get('categoryPath')
-		info_data['productUrl'] = info_json.get('productUrl')
+		info_data['name'] = info_json.get('name', "")
+		info_data['stock'] = (info_json.get('stock', "") == "Available")
+		info_data['salePrice'] = info_json.get('salePrice', "")
+		info_data['categoryPath'] = "->".join(info_json.get('categoryPath', "").split("/")[1:])
+		info_data['productUrl'] = info_json.get('productUrl', "")
 		info_list.append(info_data)
 	return info_list
-
 
 def generateIngredientJSONFile(ingredients):
 	list_of_info = getIngredientInformation(ingredients)

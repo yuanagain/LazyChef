@@ -39,8 +39,12 @@ row>* {
 	right-align: right;
 	}
 
-.recipe-list {
+.no-bullets {
 	list-style-type: none;
+	}
+
+.recipe-list {
+	@extend .no-bullets;
 	margin-bottom: 0;
 	padding-top: 1em;
 	}
@@ -135,6 +139,10 @@ body {
 	.title {
 		color: white;
 		}
+	}
+
+.check-mark {
+	height: 1em;
 	}
 
 .food-select {

@@ -46,6 +46,8 @@ class Server(Flask):
 		# 	return render_template("contact.html")
 
 		@self.route("/recipe-selection/")
+		@self.route("/index/")
+		@self.route("/")
 		def recipe_selection():
 			'''GET recipe selection page'''
 			return render_template("selection.html", appetizers = ["water", "more water"], main_courses = ["Pasta", "Chicken", "Burger"], desserts = ["Chocolate", "Ice Cream"])
@@ -54,10 +56,20 @@ class Server(Flask):
 		def post_recipes():
 			'''POST recipes from the user'''
 			session["choices"] = request.form.getlist("choice")
-			# TODO: get recipe_data from rest of application, including walmart integration
-			recipe_data = {"walmart": {
+			# TODO: get recipe_data and ingredients from rest of application, including walmart integration
+			ingredients = ["Pasta", "sauce", "chipotle", "onions", "juice", "buns", "ketchup"]
+			walmartItems = walmartJSON.getIngredientInformation(ingredients)
 
-				}}
+			walmartCategories = {}
+			for item in walmartItems:
+				category = item["categoryPath"]
+				if not category in walmartCategories:
+					walmartCategories[category] = []
+				walmartCategories[category].append(item)
+
+			recipe_data = {
+				"walmart": walmartCategories,
+				}
 			# recipe_data should contain two keys: "walmart" with walmart data
 			# and "data" with data for timers pages
 			return render_template("ingredients.html", data = recipe_data)
