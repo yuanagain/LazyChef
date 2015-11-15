@@ -100,6 +100,25 @@ class KRAKEN:
 		tlist = self.rlibs.extract_list(target)
 		return taskNodeGeneratorUtils.get_ingredients(tlist)
 
+	def produce_dict_graph(self, target):
+		"""
+		Description:
+		------
+		Returns dict of tasks corresponding to target
+
+		Parameters:
+		------
+		target : list
+			A list of recipes we desire to complete
+		"""
+		tlist = self.rlibs.extract_list(target)
+
+		## YOUR CODE HERE
+		#taskList = sorted(tlist)
+
+		return #tdlg.tnodelist_todict(taskList)
+
+
 def main2():
 	# create recipeLibrary
 	rlibs = recipeLibrary('./test_recipes/')
