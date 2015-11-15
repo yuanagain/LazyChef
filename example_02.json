@@ -1,0 +1,41 @@
+{
+    "active": [
+        {
+            "start_time": 0.0,
+            "end_time": 60.0,
+            "name": "Boil Water",
+            "time_delta": 60.0,
+            "description": "Bring cold water to a boil"
+        }
+    ],
+    "passive": [
+        {
+            "start_time": 0.0,
+            "end_time": 0.0,
+            "name": "Start",
+            "time_delta": 0.0,
+            "description": "Unleash the Kraken"
+        },
+        {
+            "start_time": 60.0,
+            "end_time": 60.0,
+            "name": "Pasta",
+            "time_delta": 0.0,
+            "description": "Ingredient"
+        },
+        {
+            "start_time": 60.0,
+            "end_time": 60.0,
+            "name": "Water",
+            "time_delta": 0.0,
+            "description": "Ingredient"
+        },
+        {
+            "start_time": 60.0,
+            "end_time": 60.0,
+            "name": "done",
+            "time_delta": 0.0,
+            "description": "Nice work"
+        }
+    ]
+}
