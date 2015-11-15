@@ -70,7 +70,7 @@ def getIngredientInformation(ingredients):
 		info_data = {}
 		info_data['name'] = info_json.get('name', "")
 		info_data['stock'] = (info_json.get('stock', "") == "Available")
-		info_data['salePrice'] = info_json.get('salePrice', "")
+		info_data['salePrice'] = float(info_json.get('salePrice', ""))
 		info_data['categoryPath'] = "->".join(info_json.get('categoryPath', "").split("/")[1:])
 		info_data['productUrl'] = info_json.get('productUrl', "")
 		info_list.append(info_data)
