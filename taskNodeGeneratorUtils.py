@@ -238,6 +238,7 @@ class recipeLibrary():
 
 
         for index in relevant_set:
+            if index == -1: continue
             # clone node
             new_node = self.tnode_list[index].copy()
 
@@ -297,7 +298,7 @@ def main():
 
     print("==== TESTING CONSTRUCTOR ==== ")
 
-    target = ['Boil Water', 'Cook Pasta']
+    target = ['Boil Water', 'Pasta']
 
     lib = recipeLibrary('./test_recipes/')
     print("SUCCESS")
