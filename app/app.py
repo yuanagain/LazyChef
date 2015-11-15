@@ -10,6 +10,7 @@ import sys, os
 sys.path.append(os.path.abspath(".."))
 
 import walmartJSON
+import taskNodeGeneratorUtils as tnUtils
 
 def main():
 	'''Create the server and start it'''
@@ -23,6 +24,8 @@ class Server(Flask):
 		super(Server, self).__init__("HackPrinceton", *args, **kwargs)
 		self.config.from_object(configPath)
 		self.jinja_env.globals["site"] = config.VIEW_GLOBALS
+
+		self.recipe_lib = tnUtils.recipeLibrary("../recipe_files/")
 
 	def shutdown(self): # not used as of now, need OS signal handling to do this
 		'''Shuts down the Flask server'''
@@ -56,8 +59,9 @@ class Server(Flask):
 		def post_recipes():
 			'''POST recipes from the user'''
 			session["choices"] = request.form.getlist("choice")
-			# TODO: get recipe_data and ingredients from rest of application, including walmart integration
-			ingredients = ["Pasta", "sauce", "chipotle", "onions", "juice", "buns", "ketchup"]
+			ingredients = tnUtils.get_ingredients(
+				self.recipe_lib.extract_list(session["choices"]))
+			# ingredients = ["Pasta", "sauce", "chipotle", "onions", "juice", "buns", "ketchup"]
 			walmartItems = walmartJSON.getIngredientInformation(ingredients)
 
 			walmartCategories = {}
@@ -67,17 +71,15 @@ class Server(Flask):
 					walmartCategories[category] = []
 				walmartCategories[category].append(item)
 
-			recipe_data = {
-				"walmart": walmartCategories,
-				}
 			# recipe_data should contain two keys: "walmart" with walmart data
 			# and "data" with data for timers pages
-			return render_template("ingredients.html", data = recipe_data)
+			return render_template("ingredients.html", walmart = walmartCategories)
 
-		@self.route("/timers/", methods = ["POST"])
+		@self.route("/timers/")
 		def post_timers():
 			'''POST timers page'''
-			return render_template("timer.html", recipe_data = request.form.get("recipe_data", []), recipes = session.get("choices", []))
+			recipe_data = {}; # get from kraken
+			return render_template("timer.html", recipe_data = recipe_data, recipes = session.get("choices", []))
 
 		@self.route("/demo/")
 		def demo():
