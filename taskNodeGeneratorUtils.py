@@ -265,6 +265,17 @@ def clean_list(node_list):
         return node_list[:-1]
     return node_list
 
+def get_ingredients(node_list):
+    '''
+    get list of ingredients for a node list
+    '''
+    ingredients = []
+    for node in node_list:
+        if len(node.depends) >= 1 and node.depends[0] == 0 and node.task_str != "done":
+            ingredients.append(node.task_str)
+
+    return ingredients
+
 def main():
 
     print("==== TESTING CONSTRUCTOR ==== ")
