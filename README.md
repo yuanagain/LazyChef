@@ -1,4 +1,5 @@
 ![Logo](/resource/Logo2x.png)
+## [Live Demo](http://thelazychef.cloudapp.net/)
 ![Active Demo](/resource/LiveApp.png)
 ## Introduction
 

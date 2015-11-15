@@ -111,7 +111,7 @@ class KRAKEN:
 		target : list
 			A list of recipes we desire to complete
 		"""
-		# tlist = self.rlibs.extract_list(target)
+		tlist = self.rlibs.extract_list(target)
 
 		## YOUR CODE HERE
 		#taskList = optimize recipe
