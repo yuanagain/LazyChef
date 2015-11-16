@@ -37,17 +37,6 @@ class Server(Flask):
 
 	def configureRoutes(self):
 		'''Configure the routes for the server'''
-		# @self.route("/index/")
-		# @self.route("/")
-		# def index():
-		# 	'''GET index page'''
-		# 	return render_template("index.html")
-
-		# @self.route("/contact/")
-		# def contact():
-		# 	'''GET the contact page'''
-		# 	return render_template("contact.html")
-
 		@self.route("/recipe-selection/")
 		@self.route("/index/")
 		@self.route("/")
@@ -73,9 +62,7 @@ class Server(Flask):
 						walmartCategories[category] = []
 					walmartCategories[category].append(item)
 					totalPrice += item["salePrice"]
-
-			# recipe_data should contain two keys: "walmart" with walmart data
-			# and "data" with data for timers pages
+	
 			return render_template("ingredients.html", walmart = walmartCategories, total = totalPrice)
 
 		@self.route("/timers/")
