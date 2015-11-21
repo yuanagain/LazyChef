@@ -180,8 +180,12 @@ def generate_todo_list(tnode_list):
             active_task_list.append(task)
 
     active_task_list.sort(key = lambda item: item["start_time"])
+    passive_task_list.sort(key = lambda item: item["end_time"])
 
-    task_pack = {'active': active_task_list, 'passive': passive_task_list}
+    task_pack = {
+        'active': active_task_list, 'passive': passive_task_list,
+        'end_time': max((active_task_list[-1]["end_time"], passive_task_list[-1]["end_time"]))
+        }
     return task_pack
 
 def main():
