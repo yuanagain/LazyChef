@@ -2,6 +2,7 @@
 // lazychef.js
 
 function LazyChef(data) {
+	// LazyChef main function
 	var timer = new Timer();
 	var pointers = {
 		active: 0,
@@ -28,6 +29,22 @@ function LazyChef(data) {
 			}
 		});
 
+	var activeIndex = 0;
+	// can't just use a for loop because the array is actively being resized
+	while (activeIndex + 1 < data.active.length) {
+		var current = data.active[activeIndex],
+			next = data.active[activeIndex + 1],
+			time_diff = next.start_time - current.end_time;
+		if (time_diff > 0) {
+			// Fill empty spaces between active nodes with "idle" nodes
+			var mockTask = {name: "Idle", "description": "", "start_time": current.end_time, "end_time": next.start_time, "time_delta": time_diff};
+			// Insert into the array at a given position
+			data.active.splice(activeIndex + 1, 0, mockTask);
+			activeIndex++; // need to skip the newly inserted idle node
+			}
+		activeIndex++;
+		}
+
 	timer.secondHook(0, updateActive);
 
 	var passiveTemplate = document.getElementById("passive-task-nth");
@@ -52,6 +69,7 @@ function LazyChef(data) {
 
 				$("#background-tasks").append(taskDOM);
 
+				// create Timer to display the timer countdown
 				passiveTimer = new TimerVisualizer("#passive-timer-" + passiveIndex, passiveTask.time_delta, passiveTask.end_time, passiveTask.name, timer, passive_color);
 				passiveTimer.start();
 
@@ -71,17 +89,22 @@ function LazyChef(data) {
 	function updateActive() {
 		// Update the current active task
 		var task = data.active[pointers.active];
+
+		// display the new timer and its given data
 		$("#name").html(task.name);
 		$("#description").html(task.description);
 		taskTimer = new TimerVisualizer("#active-task-timer", task.time_delta, task.end_time, task.name, timer);
 		taskTimer.start();
+
+		// update the upcoming timers
 		updateUpcoming(pointers.active);
+
 		timer.secondHook(task.end_time + 1, function() {
 			// Remove the current task visualizer
 			taskTimer.destroy();
 			pointers.active++;
 			if (pointers.active < data.active.length) updateActive();
-			else {
+			else { // no more items left
 				$("#name").html("");
 				$("#description").html("");
 				$("#done-notification").css("display", "block");
@@ -103,12 +126,14 @@ function LazyChef(data) {
 
 			// if pointer.active + 1 >= data.active.length, no more upcoming tasks
 			if (pointers.active + i < data.active.length) {
+				// display the upcoming timer if it exists
 				var upcomingTask = data.active[pointers.active + i];
 				newTimer = new TimerVisualizer("#upcoming-timer-" + i, upcomingTask.time_delta, upcomingTask.end_time, upcomingTask.name, timer);
 				pointers.upcomingTimers[i] = newTimer;
 
 				$("#upcoming-name-" + i).html(upcomingTask.name);
 				}
+			else break;
 			}
 		}
 	}

@@ -179,6 +179,8 @@ def generate_todo_list(tnode_list):
         else:
             active_task_list.append(task)
 
+    active_task_list.sort(key = lambda item: item["start_time"])
+
     task_pack = {'active': active_task_list, 'passive': passive_task_list}
     return task_pack
 

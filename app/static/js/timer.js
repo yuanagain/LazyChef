@@ -99,11 +99,11 @@ TimerVisualizer.prototype.start = function() {
 	// Start the timer
 	var visualizer = this;
 	this.timer.eachSecond(this.timer_id, function(currentTime) {
-	var timer = visualizer.timer;
-	visualizer.circle.animate((visualizer.total - currentTime) / visualizer.delta,
-		function() {
-			visualizer.setText(visualizer.total - currentTime);
-			});
+		var timer = visualizer.timer;
+		visualizer.circle.animate((visualizer.total - currentTime) / visualizer.delta,
+			function() {
+				visualizer.setText(visualizer.total - currentTime);
+				});
 		});
 	}
 
