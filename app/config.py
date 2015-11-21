@@ -12,6 +12,8 @@ class FlaskSettings(object):
 	SERVER_NAME = "localhost:8080"
 	PREFERRED_URL_SCHEME = "http://"
 
+RECIPES = ["Baked Potato", "Cook Pasta"]
+
 VIEW_GLOBALS = {
 	"name": "Lazy Chef"
 	}

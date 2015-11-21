@@ -105,8 +105,10 @@ def createTask(tnode, current_time = 0.0):
 
     task_dict = dict()
     task_dict['name'] = tnode.task_str
-    task_dict['start_time'] = current_time
-    task_dict['end_time'] = current_time + tnode.act_time
+    # if (tnode.act_time > 0): # active task
+    #     current_time += max(tnode.depends, key = lambda item: item.end_time)
+    task_dict['start_time'] = tnode.beg_time
+    task_dict['end_time'] = tnode.beg_time + tnode.act_time + tnode.back_time
     task_dict['time_delta'] = max(tnode.act_time, tnode.back_time)
     task_dict['description'] = tnode.task_desc
 

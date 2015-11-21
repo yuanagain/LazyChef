@@ -271,7 +271,7 @@ def get_ingredients(node_list):
     '''
     ingredients = []
     for node in node_list:
-        if len(node.depends) >= 1 and node.depends[0] == 0 and node.task_str != "done":
+        if (node.task_desc) == "Ingredient":
             ingredients.append(node.task_str)
 
     return ingredients

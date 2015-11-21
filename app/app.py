@@ -37,46 +37,20 @@ class Server(Flask):
 
 	def configureRoutes(self):
 		'''Configure the routes for the server'''
-		# @self.route("/index/")
-		# @self.route("/")
-		# def index():
-		# 	'''GET index page'''
-		# 	return render_template("index.html")
-
-		# @self.route("/contact/")
-		# def contact():
-		# 	'''GET the contact page'''
-		# 	return render_template("contact.html")
-
 		@self.route("/recipe-selection/")
 		@self.route("/index/")
 		@self.route("/")
 		def recipe_selection():
 			'''GET recipe selection page'''
-			return render_template("selection.html", recipes = ["Baked Potato"])
+			return render_template("selection.html", recipes = config.RECIPES)
 
 		@self.route("/submit/", methods = ["POST"])
 		def post_recipes():
 			'''POST recipes from the user'''
 			session["choices"] = request.form.getlist("choice")
-			ingredients = self.kraken.get_ingredients(session["choices"])
-			walmartItems = walmartJSON.getIngredientInformation(ingredients)
-
-			totalPrice = 0
-			walmartCategories = {}
-			for item in walmartItems:
-				if item["salePrice"] <= 1000:
-					# if the item is more than $1000, it's probably a bug
-					# i.e getting an oven
-					category = item["categoryPath"]
-					if not category in walmartCategories:
-						walmartCategories[category] = []
-					walmartCategories[category].append(item)
-					totalPrice += item["salePrice"]
-
-			# recipe_data should contain two keys: "walmart" with walmart data
-			# and "data" with data for timers pages
-			return render_template("ingredients.html", walmart = walmartCategories, total = totalPrice)
+			ingredients = filter(lambda item: "Oven" not in item, self.kraken.get_ingredients(session["choices"]))
+	
+			return render_template("ingredients.html", ingredients = ingredients)
 
 		@self.route("/timers/")
 		def post_timers():

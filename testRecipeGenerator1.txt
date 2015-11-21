@@ -1,4 +1,0 @@
-boil_pasta
-10
-boiling_water, pasta
-Put pasta in boiling water

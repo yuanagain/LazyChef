@@ -57,6 +57,9 @@ row>* {
 	* {
 		color: white;
 		}
+	&.no-round {
+		border-radius: 0px;
+		}
 	}
 
 .name.padded {

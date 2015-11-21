@@ -3,7 +3,17 @@ recipeValidator.py
 By: Hector Solis
 for - Princeton Fall 2015 Hackathon
 
-
+func - clearPath(name, path_list): Recursive helper function no need to call
+            -Checks if there is a clear path in the dependencies
+                Prints a warning if one or more recipes are messed up
+func - validateRecipe(): validates a recipe in the "recipe_files" directory
+                        also returns a list of end nodes of the involved recipes
+        Example:
+            validateRecipe() -> ['Juicer', 'Cherry', 'Trail Mix', 'Cook Pasta', 'Piggy Wiggy', 'Bake Brownies']
+            validateRecipe() {invalid recipe} -> One or more files is messed up. Check ~
+func - validateRecipeWithPath(filepath): validates a recipe in a given driectory
+        Example:
+            validateRecipeWithPath("recipes_main") -> ['Baked Potato', 'Macaroni Baking']
 '''
 
 import os
@@ -60,10 +70,9 @@ def validateRecipe():
         if is_end_node:
             list_end_nodes.append(my_name)
     print(list_end_nodes)
-
     for end_node in list_end_nodes:
         clearPath(end_node, task_list)
-
+    return list_end_nodes
 
 def validateRecipeWithPath(filepath):
     list_of_tasks = os.listdir(filepath)
@@ -104,7 +113,6 @@ def validateRecipeWithPath(filepath):
         if is_end_node:
             list_end_nodes.append(my_name)
     print(list_end_nodes)
-
     for end_node in list_end_nodes:
         clearPath(end_node, task_list)
-
+    return list_end_nodes
