@@ -55,6 +55,7 @@ import brute_force as bf
 import taskNodeGeneratorUtils
 import todoListGenerator as tdlg
 from taskNodeGeneratorUtils import recipeLibrary
+import Tester
 
 
 class KRAKEN:
@@ -111,10 +112,11 @@ class KRAKEN:
 		target : list
 			A list of recipes we desire to complete
 		"""
-		# tlist = self.rlibs.extract_list(target)
+		tlist = self.rlibs.extract_list(target)
+		for i in range(0,len(tlist)):
+			print(tlist[i].task_str)
 
-		## YOUR CODE HERE
-		#taskList = optimize recipe
+		taskList = Tester.optimizeRecipe(tlist)
 
 		return tdlg.tnodelist_todict(taskList)
 
