@@ -48,22 +48,9 @@ class Server(Flask):
 		def post_recipes():
 			'''POST recipes from the user'''
 			session["choices"] = request.form.getlist("choice")
-			ingredients = self.kraken.get_ingredients(session["choices"])
-			walmartItems = walmartJSON.getIngredientInformation(ingredients)
-
-			totalPrice = 0
-			walmartCategories = {}
-			for item in walmartItems:
-				if item["salePrice"] <= 1000:
-					# if the item is more than $1000, it's probably a bug
-					# i.e getting an oven
-					category = item["categoryPath"]
-					if not category in walmartCategories:
-						walmartCategories[category] = []
-					walmartCategories[category].append(item)
-					totalPrice += item["salePrice"]
+			ingredients = filter(lambda item: "Oven" not in item, self.kraken.get_ingredients(session["choices"]))
 	
-			return render_template("ingredients.html", walmart = walmartCategories, total = totalPrice)
+			return render_template("ingredients.html", ingredients = ingredients)
 
 		@self.route("/timers/")
 		def post_timers():

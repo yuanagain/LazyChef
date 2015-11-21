@@ -13,27 +13,11 @@
 				</div>
 			</div>
 			<div class="row no-round" id = "main-display">
-				<div class="12u$">
-					<img src="/static/images/check.png" alt="" class = "check-mark"> In Stock
-				</div>
-				<div class="12u$">
-					Walmart Store: <a href="https://www.walmart.com/store/3102" id = "store-location">Princeton Walmart</a>
-				</div>
-				<div class="12u$">
-					Total Price: ${{ total }}
-				</div>
-				{% for category in walmart %}
-					<div class="12u$">
-						<h3>{{ category }}</h3>
-						<ul class="no-bullets">
-							{% for item in walmart[category] %}
-							<li>
-							{% if item.stock %} <img src="/static/images/check.png" alt="" class = "check-mark"> {% endif %}
-							<a href="{{ item.productUrl }}">{{ item.name }} - ${{ item.salePrice }}</a></li>
-							{% endfor %}
-						</ul>
-					</div>
-				{% endfor %}
+				<ol>
+					{% for ingredient in ingredients %}
+						<li><h3>{{ ingredient }}</h3></li>
+					{% endfor %}
+				</ol>
 			</div>
 		</div>
 	</section>
