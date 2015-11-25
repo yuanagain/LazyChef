@@ -2,14 +2,14 @@
 {% block content %}
 	<section id="main" class = "container">
 		<img src="/static/images/ingredients_background.png" class = "background-image" alt="">
-		<div class="container">
+		<div class="container all-content">
 			<div class="row title-display">
 				<div class="4u"><h2 class = "title">Ingredients</h2></div>
 				<div class="4u">
-					<input type="image" src = "/static/images/print_button.png" id = "print-button" onclick = "window.print(); return false;">
+					<a id = "print-button" class = "button round" onclick = "window.print(); return false;">Print</a>
 				</div>
 				<div class="4u">
-					<a href = "/timers/"><img src="/static/images/continue_button.png" id = "submit-button" alt=""></a>
+					<a id = "submit-button" class = "button round" href = "/timers/">Continue</a>
 				</div>
 			</div>
 			<div class="row no-round" id = "main-display">

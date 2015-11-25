@@ -4,10 +4,16 @@
 function LazyChef(data) {
 	// LazyChef main function
 	var timer = new Timer();
+	var activeTimer = new Timer();
+	timer.eachSecond("activeTimer", function() {
+		activeTimer.next();
+		});
+
 	var pointers = {
 		active: 0,
 		passive: 0,
-		upcomingTimers: [null, null, null]
+		upcomingTimers: [null, null, null],
+		currentTask: null
 		}
 
 	$("#control-play").click(function() {
@@ -21,21 +27,41 @@ function LazyChef(data) {
 			}
 		});
 
+	$("#control-next").click(function() {
+		if (timer.isRunning()) {
+			var task = pointers.currentTask;
+			activeTimer.set(task.end_time + 1);
+			task.timerDisplay.destroy();
+			pointers.currentTask = null;
+			pointers.active++;
+			if (pointers.active < data.active.length) updateActive();
+			else { // no more items left
+				$("#name").html("");
+				$("#description").html("");
+				$("#done-notification").css("display", "block");
+				$("#active-task-timer").remove();
+				$("#control-play i").remove();
+				}
+			}
+		});
+
 	$("#start-timers").click(function() {
 		if (! timer.isRunning()) {
 			timer.start();
 			$(this).remove();
-			$("#control-play i").get(0).className = "fa fa-pause";
+			$("#controls div.hidden").removeClass("hidden");
+			$("#control-play").children("i").get(0).className = "fa fa-pause";
 			}
 		});
 
+	// var totalTimer = new TimerVisualizer("#total-timer", data.end_time, data.end_time, "Overall", timer, passive_color);
+	// totalTimer.start();
+
 	fixIdleGaps(data.active);
+	timer.secondHook(0, updateActive);
+	queuePassiveTasks(data);
 
 	console.log(data);
-
-	timer.secondHook(0, updateActive);
-
-	queuePassiveTasks(data);
 
 	function updateActive() {
 		// Update the current active task
@@ -44,16 +70,19 @@ function LazyChef(data) {
 		// display the new timer and its given data
 		$("#name").html(task.name);
 		$("#description").html(task.description);
-		taskTimer = new TimerVisualizer("#active-task-timer", task.time_delta, task.end_time, task.name, timer);
+		taskTimer = new TimerVisualizer("#active-task-timer", task.time_delta, task.end_time, task.name, activeTimer);
 		taskTimer.start();
+		task.timerDisplay = taskTimer;
+		pointers.currentTask = task;
 
 		// update the upcoming timers
 		updateUpcoming(pointers.active);
 
-		timer.secondHook(task.end_time + 1, function() {
+		activeTimer.secondHook(task.end_time + 1, function() {
 			// Remove the current task visualizer
 			taskTimer.destroy();
 			pointers.active++;
+			pointers.currentTask = null;
 			if (pointers.active < data.active.length) updateActive();
 			else { // no more items left
 				$("#name").html("");
@@ -79,7 +108,7 @@ function LazyChef(data) {
 			if (pointers.active + i < data.active.length) {
 				// display the upcoming timer if it exists
 				var upcomingTask = data.active[pointers.active + i];
-				newTimer = new TimerVisualizer("#upcoming-timer-" + i, upcomingTask.time_delta, upcomingTask.end_time, upcomingTask.name, timer);
+				newTimer = new TimerVisualizer("#upcoming-timer-" + i, upcomingTask.time_delta, upcomingTask.end_time, upcomingTask.name, activeTimer);
 				pointers.upcomingTimers[i] = newTimer;
 
 				$("#upcoming-name-" + i).html(upcomingTask.name);

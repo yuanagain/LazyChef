@@ -54,13 +54,20 @@ from scipy.sparse.csgraph import breadth_first_order
 from scipy.sparse.csgraph import connected_components
 
 #Target recipe name
-target = ['done']
+#target = ['add_salt','boil_water','dice_tomatoes',\
+#          'drain_pasta','pasta_in_water','pot_on_stove',\
+#          'prepare_drink','tomatoes_on_pasta']
+
+#target = ['Piggy Wiggy', 'Cocktail Sausages', 'Roll Dough',\
+#           'Wrap Sausages', 'Turn on Oven', 'Preheat Oven',\
+#            ]
 
 #Create recipe library
-recipe_lib = recipeLibrary('./test_recipes/')
+#recipe_lib = recipeLibrary('./recipe_files/')
+#recipe_lib = recipeLibrary('./test_recipes/')
 
 #Node List
-node_list = recipe_lib.extract_list(target)
+#node_list = recipe_lib.extract_list(target)
 '''
 for i in range(0, len(node_list)):
     print(node_list[i].id)
@@ -70,26 +77,46 @@ for i in range(0, len(node_list)):
     print("================")
 '''
 #Potential TODO (catch exception where recipe is empty)
-#numTasks =(10,10)
-numTasks = (len(node_list),len(node_list))
-DG_dense = np.zeros(numTasks)
-recipe_out = []
+##numTasks =(1,1)
+##DG_dense = np.zeros(numTasks)
+##recipe_out = []
+
+##node_list = []
 
 #Queue of background tasks in progress
-InProgQ = []
+##InProgQ = []
 
 #Priority queue of tasks
-PQ = PriorityQueue(numTasks[0])
+##PQ = PriorityQueue(numTasks[0])
 
 #Global time (for assigning beginning times)
-global_time = 0.0
+##global_time = 0.0
 
 #Use a dictionary to maintain connectivity between
 #TaskNode data and id
-dct = dict()
+##dct = dict()
+def optimizeRecipe(node_list):
+    numTasks = (len(node_list), len(node_list))
+    DG_dense = np.zeros(numTasks)
+    recipe_out = []
+    PQ = PriorityQueue(numTasks[0])
+    dct = dict()
+    InProgQ = []
+    global_time = 0
 
-def initializeRecipe():
-    global DG_dense
+
+    initializeRecipe(node_list, dct, numTasks[0], DG_dense)
+    cTask = dct[0]
+    while cTask.task_str != "done":
+        getNewlyAccesibleTasks(cTask, numTasks[0], dct)
+        cTask = PQ.get()
+        #print("cTask")
+        #print("new ctasl" + cTask.task_str)
+        execute(cTask)
+    return recipe_out
+
+def initializeRecipe(node_list, dct, numTasks, DG_dense):
+    print(len(node_list))
     '''
     Tnode0 = TaskNode(0,0,0,np.array([1,2,3,4,9]), \
                     'start', \
@@ -136,7 +163,6 @@ def initializeRecipe():
     '''
     for i in range(0,numTasks[0]):
         dct[i] = node_list[i]
-        #print(dct[i].depends)
         for k in range(0,len(dct[i].depends)):
            j = dct[i].depends[k]
            DG_dense[i][j] = 1  
@@ -149,7 +175,7 @@ def initializeRecipe():
             DG_dense_rev[i][j] = DG_dense[j][i]
 
     DG_dense = DG_dense_rev
-    #print(DG_dense)
+    print(DG_dense)
     
     #temp = np.zeros(numTasks[0])
     #for i in range(0, numTasks[0]):
@@ -183,6 +209,7 @@ def initializeRecipe():
     #dct[numTasks[0]-1] = tempnode     
     dct[0].state = "complete"
     
+    
     print("+++++++++++++++++++++++++")
     for i in range(0, len(node_list)):
         print(dct[i].id)
@@ -191,37 +218,32 @@ def initializeRecipe():
         print(dct[i].task_str)
         print("================")
     
-def getNewlyAccesibleTasks(tnode):
+def getNewlyAccesibleTasks(tnode, numTasks, dct):
     for i in tnode.depends:
         canPut = True
-        print("just completed = " + str(tnode.task_str))
-        #print("Current possible dependencies are : ")
-        #print(tnode.depends)       
+        #print("just completed = " + str(tnode.task_str))
+        print("Current possible dependencies are : ")
+        print(tnode.depends)       
         for j in range(0,numTasks[0]):
             if DG_dense[j][i] == 1:
-                #print("i is : " + str(i))
-                #print("j is : " + str(j))
+                print("i is : " + str(i))
+                print("j is : " + str(j))
                 print(dct[j].state == "complete")
                 if dct[j].state != "complete":
-                    canPut = False
+                    if j != tnode.id:
+                        print("Self-Match pruned")
+                        canPut = False
+                        break
         if canPut == True:
             PQ.put(dct[i])
             print("Just added " + dct[i].task_desc)
                     
     
-def optimizeRecipe():
-    initializeRecipe()
-    cTask = dct[0]
-    while cTask.task_str != "done":
-        getNewlyAccesibleTasks(cTask)
-        cTask = PQ.get()
-        print("cTask")
-        print("new ctasl" + cTask.task_str)
-        execute(cTask)
+
 
 def execute(tnode):
     global global_time
-    #print("Executing " + tnode.task_desc)
+    print("Executing " + tnode.task_desc)
     recipe_out.append(tnode)
     tnode.beg_time = global_time
     if tnode.act_time > 0:
@@ -236,9 +258,10 @@ def execute(tnode):
             #print("Just popped from PQ : " + temp.task_desc)
             #PQ.put(temp)
             if PQ.empty() == True:
-                #print("Nothing on PQ")
+                print("Nothing on PQ")
                 long_on_ProgQ = 0
                 for j in InProgQ:
+                    print(j.task_desc)
                     if j.back_time > long_on_ProgQ:
                         long_on_ProgQ = j.back_time
                     completeTask(j)
@@ -263,14 +286,13 @@ def completeTask(tnode):
     tnode.state = "complete"
     if tnode.back_time > 0:
         InProgQ.remove(tnode)
-        getNewlyAccesibleTasks(tnode)
-    #print(tnode.task_desc)  
+    ##print(tnode.task_desc)  
 
-def main():
-    optimizeRecipe()
-    for i in recipe_out:
-        print(i.task_desc)
-        print(i.beg_time)
+##def main():
+  ##  optimizeRecipe()
+   ## for i in recipe_out:
+     ##   print(i.task_desc)
+       ## print(i.beg_time)
 
-if __name__ == '__main__':
-    main()
+##if __name__ == '__main__':
+    ##main()
