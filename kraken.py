@@ -138,9 +138,9 @@ def main2():
 
 def main():
 	start_time_yuan = time.clock()
-	fg = KRAKEN("./recipes_basic_yw/")
-	tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
-	#tg = ['Blondies']
+	fg = KRAKEN("./recipes_main/")
+	#tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
+	tg = ["Blondies"]
 	print(fg.produce_dict(tg))
 	end_time_yuan = time.clock()
 	print(end_time_yuan - start_time_yuan)
