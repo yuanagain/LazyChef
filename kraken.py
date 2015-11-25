@@ -137,17 +137,21 @@ def main2():
 	tdlg.tnodelist_tojson(tasklist, out_fname = './example.json')
 
 def main():
-	#start_time_yuan = time.clock()
-	#fg = KRAKEN("./recipes_main/")
-	#tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
-	#tg = ["Blondies"]
-	#print(fg.produce_dict(tg))
-	#end_time_yuan = time.clock()
-	#print(end_time_yuan - start_time_yuan)
-
-	start_time_ilya = time.clock()
+	'''
+	start_time_yuan = time.clock()
 	fg = KRAKEN("./recipes_basic_yw/")
 	tg = ['Baked Potato', 'Bake Pasta and Cheese']
+	#tg = ['Bake Blondie']
+	print(fg.produce_dict(tg))
+	end_time_yuan = time.clock()
+	print(end_time_yuan - start_time_yuan)
+	'''
+	start_time_ilya = time.clock()
+	fg = KRAKEN("./recipes_main/canapes/")
+	#tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
+	tg = ['Put Cranberries']
+	#tg = ['Bake Brownies']
+	#tg = ['Baked Potato', 'Bake Pasta and Cheese']
 	#       'Bake Potatoes', 'Boiling Water', \
 	#       'Boil Water', 'Cheese', 'Cook Pasta', \
 	#       'Macaroni Baking', 'Mix Cheese In', \
@@ -156,11 +160,21 @@ def main():
 	print(fg.produce_dict_graph(tg))
 	end_time_ilya = time.clock()
 	print(end_time_ilya - start_time_ilya)
+	
+	'''
+	fg = KRAKEN('./more_recipes/')
+	tg = ['Piggy Wiggy', 'Cocktail Sausages', 'Roll Dough',\
+           'Wrap Sausages', 'Turn on Oven', 'Preheat Oven']
+	print(fg.produce_dict_graph(tg))
+	'''
 
-	#fg = KRAKEN('./more_recipes/')
-	#tg = ['Piggy Wiggy', 'Cocktail Sausages', 'Roll Dough',\
-    #       'Wrap Sausages', 'Turn on Oven', 'Preheat Oven']
-	#print(fg.produce_dict_graph(tg))
+	'''
+	fg = KRAKEN('./test_recipes/')
+	tg = ['add_salt','boil_water','dice_tomatoes',\
+	          'drain_pasta','pasta_in_water','pot_on_stove',\
+	          'prepare_drink','tomatoes_on_pasta']
+	print(fg.produce_dict_graph(tg))
+	'''
 
 if __name__ == "__main__":
 	main()
