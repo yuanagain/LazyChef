@@ -4,6 +4,8 @@ Module: Task Node
 
   features class description of TaskNode
 
+  features class description of IngredientNode
+
 
 '''
 
@@ -63,6 +65,7 @@ class TaskNode():
         self.task_str = task_str_in
         self.task_desc = task_desc_in
         self.beg_time = 0.0
+        self.ingredients = dict()
 
     #Overwrite the compare function to compare TaskNodes by
     #background time

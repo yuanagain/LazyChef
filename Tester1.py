@@ -49,9 +49,9 @@ import numpy as np
 from tnode import TaskNode
 import taskNodeGeneratorUtils as tnUtils
 from taskNodeGeneratorUtils import recipeLibrary
-from scipy.sparse import csr_matrix
-from scipy.sparse.csgraph import breadth_first_order
-from scipy.sparse.csgraph import connected_components
+#from scipy.sparse import csr_matrix
+#from scipy.sparse.csgraph import breadth_first_order
+#from scipy.sparse.csgraph import connected_components
 
 #Target recipe name
 #target = ['add_salt','boil_water','dice_tomatoes',\
@@ -125,7 +125,7 @@ def initializeRecipe():
      
     dct[0].state = "complete"
     
-    '''    
+    
     print("+++++++++++++++++++++++++")
     for i in range(0, len(node_list)):
         print(dct[i].id)
@@ -133,18 +133,18 @@ def initializeRecipe():
         print(dct[i].state)
         print(dct[i].task_str)
         print("================")
-    '''
+    
 
 def getNewlyAccesibleTasks(tnode):
     for i in tnode.depends:
         canPut = True
-        #print("Current possible dependencies are : ")
-        #print(tnode.depends)       
+        print("Current possible dependencies are : ")
+        print(tnode.depends)       
         for j in range(0,numTasks[0]):
             if DG_dense[j][i] == 1:
-                #print("i is : " + str(i))
-                #print("j is : " + str(j))
-                #print(dct[j].state != "complete")
+                print("i is : " + str(i))
+                print("j is : " + str(j))
+                print(dct[j].state != "complete")
                 if dct[j].state != "complete":
                     if j != tnode.id:
                         #print("Self-Match pruned")
@@ -152,7 +152,7 @@ def getNewlyAccesibleTasks(tnode):
                         break
         if canPut == True:
             PQ.put(dct[i])
-            #print("Just added " + dct[i].task_desc)
+            print("Just added " + dct[i].task_str)
                     
 def optimizeRecipe(): 
     initializeRecipe()
@@ -165,7 +165,7 @@ def optimizeRecipe():
 
 def execute(tnode):
     global global_time
-    print("Executing " + tnode.task_desc)
+    print("Executing " + tnode.task_str)
     recipe_out.append(tnode)
     tnode.beg_time = global_time
     if tnode.act_time > 0:
@@ -180,16 +180,16 @@ def execute(tnode):
             #print("Just popped from PQ : " + temp.task_desc)
             #PQ.put(temp)
             if PQ.empty() == True:
-                print("Nothing on PQ")
+                #print("Nothing on PQ")
                 long_on_ProgQ = 0
                 for j in InProgQ:
-                    print(j.task_desc)
+                    print(j.task_str)
                     if j.back_time > long_on_ProgQ:
                         long_on_ProgQ = j.back_time
                     completeTask(j)
                 global_time = global_time + long_on_ProgQ
 
-            if inProgF(i) == False:
+            if inProgF(i) == False and self.PQ.empty() != True:
                  completeTask(i)
            
     elif tnode.back_time > 0:
@@ -204,9 +204,11 @@ def inProgF(tnode):
         return  False
 
 def completeTask(tnode):
-    print("completed " + tnode.task_desc)
+    print("completed " + tnode.task_str)
     tnode.state = "complete"
     if tnode.back_time > 0:
+        for i in InProgQ:
+            print("test : " + i.task_str)
         InProgQ.remove(tnode)
         #getNewlyAccesibleTasks(tnode)
     #print(tnode.task_desc)  
