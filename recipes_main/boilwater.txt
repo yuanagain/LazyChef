@@ -1,5 +1,5 @@
 Boil Water
-Bring cold water to a boil
-20
+Bring the water to a boil
 0
-Water
+300
+Add Sugar
