@@ -105,7 +105,7 @@ class GraphAlgo:
                self.DG_dense[i][j] = 1  
 
         self.DG_dense = self.DG_dense.transpose()
-        print(self.DG_dense)
+        #print(self.DG_dense)
         
         #Rearrange dependencies in the dictionary to 
         #reflect reversed Digraph
@@ -118,7 +118,7 @@ class GraphAlgo:
          
         self.dct[0].state = "complete"
 
-        
+        '''
         print("+++++++++++++++++++++++++")
         for i in range(0, len(self.node_list)):
             print(self.dct[i].id)
@@ -128,39 +128,51 @@ class GraphAlgo:
             print(self.dct[i].act_time)
             print(self.dct[i].back_time)
             print("================")
-           
+        '''   
 
     def getNewlyAccesibleTasks(self, tnode):
         for i in tnode.depends:
             canPut = True
-            print("Current possible dependencies are : ")
-            print(tnode.depends)       
+            #print("Current possible dependencies are : ")
+            #print(tnode.depends)       
             for j in range(0, self.numTasks[0]):
                 if self.DG_dense[j][i] == 1:
-                    print("i is : " + str(i))
-                    print("j is : " + str(j))
-                    print(self.dct[j].state != "complete")
+                    #print("i is : " + str(i))
+                    #print("j is : " + str(j))
+                    #print(self.dct[j].state != "complete")
                     if self.dct[j].state != "complete":
-                        #if j != tnode.id:
+                        if j != tnode.id:
                             #print("Self-Match pruned")
                             canPut = False
                             break
             if canPut == True:
                 self.PQ.put(self.dct[i])
-                print("Just added " + self.dct[i].task_str)
+                #print("Just added " + self.dct[i].task_str)
                         
     def optimizeRecipe(self): 
         self.initializeRecipe()
         cTask = self.dct[0]
+        self.getNewlyAccesibleTasks(cTask) #THIS WAS INSIDE while
         while cTask.task_str != "done":
-            self.getNewlyAccesibleTasks(cTask)
+            
+            
+            if self.PQ.empty() == True:
+                #print("Nothing on PQ")
+                long_on_ProgQ = 0
+                for j in self.InProgQ:
+                    #print("WTF " + j.task_str)
+                    if j.back_time > long_on_ProgQ:
+                        long_on_ProgQ = j.back_time
+                    self.completeTask(j)
+                self.global_time = self.global_time + long_on_ProgQ
+            
             cTask = self.PQ.get()
             self.execute(cTask)
         return self.recipe_out
 
     def execute(self, tnode):
         #global global_time
-        print("Executing " + tnode.task_str)
+        #print("Executing " + tnode.task_str)
         self.recipe_out.append(tnode)
         tnode.beg_time = self.global_time
         if tnode.act_time > 0:
@@ -174,6 +186,7 @@ class GraphAlgo:
                 #temp = PQ.get()
                 #print("Just popped from PQ : " + temp.task_desc)
                 #PQ.put(temp)
+                '''
                 if self.PQ.empty() == True:
                     print("Nothing on PQ")
                     long_on_ProgQ = 0
@@ -183,8 +196,8 @@ class GraphAlgo:
                             long_on_ProgQ = j.back_time
                         self.completeTask(j)
                     self.global_time = self.global_time + long_on_ProgQ
-
-                if self.inProgF(i) == False and self.PQ.empty() != True:
+                '''
+                if self.inProgF(i) == False: #and self.PQ.empty() != True:
                      self.completeTask(i)
                
         elif tnode.back_time > 0:
@@ -205,6 +218,7 @@ class GraphAlgo:
     def completeTask(self, tnode):
         #print("completed " + tnode.task_str)
         tnode.state = "complete"
+        self.getNewlyAccesibleTasks(tnode)
         if tnode.back_time > 0:
             self.InProgQ.remove(tnode)
             #for i in self.InProgQ:
