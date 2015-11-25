@@ -55,6 +55,8 @@ import brute_force as bf
 import taskNodeGeneratorUtils
 import todoListGenerator as tdlg
 from taskNodeGeneratorUtils import recipeLibrary
+from galgo import GraphAlgo
+import time
 
 
 class KRAKEN:
@@ -83,7 +85,6 @@ class KRAKEN:
 		"""
 		tlist = self.rlibs.extract_list(target)
 		tasklist = bf.maximizer(tlist)
-
 		return tdlg.tnodelist_todict(tasklist)
 
 	def get_ingredients(self, target):
@@ -112,11 +113,13 @@ class KRAKEN:
 			A list of recipes we desire to complete
 		"""
 		tlist = self.rlibs.extract_list(target)
+		galgo = GraphAlgo(tlist)
+		tasklist = galgo.optimizeRecipe()
+		print('========================')
+		for i in tasklist:
+			print i.task_str
 
-		## YOUR CODE HERE
-		#taskList = optimize recipe
-
-		return tdlg.tnodelist_todict(taskList)
+		return tdlg.tnodelist_todict(tasklist)
 
 
 def main2():
@@ -134,9 +137,29 @@ def main2():
 	tdlg.tnodelist_tojson(tasklist, out_fname = './example.json')
 
 def main():
+	start_time_yuan = time.clock()
 	fg = KRAKEN("./recipes_basic_yw/")
 	tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
 	print(fg.produce_dict(tg))
+	end_time_yuan = time.clock()
+	print(end_time_yuan - start_time_yuan)
+
+	#start_time_ilya = time.clock()
+	#fg = KRAKEN("./recipes_basic_ik/")
+	#tg = ['Baked Potato', 'Bake Pasta and Cheese', \
+	#       'Bake Potatoes', 'Boiling Water', \
+	#       'Boil Water', 'Cheese', 'Cook Pasta', \
+	#       'Macaroni Baking', 'Mix Cheese In', \
+	#       'Oven Heated', 'Pasta', 'Potatoes', \
+	#       'Potato Baking', 'Preheat Oven', 'Water']
+	#print(fg.produce_dict_graph(tg))
+	#end_time_ilya = time.clock()
+	#print(end_time_ilya - start_time_ilya)
+
+	#fg = KRAKEN('./more_recipes/')
+	#tg = ['Piggy Wiggy', 'Cocktail Sausages', 'Roll Dough',\
+    #       'Wrap Sausages', 'Turn on Oven', 'Preheat Oven']
+	#print(fg.produce_dict_graph(tg))
 
 if __name__ == "__main__":
 	main()
