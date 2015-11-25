@@ -43,6 +43,10 @@ row>* {
 	list-style-type: none;
 	}
 
+.hidden {
+	visibility: hidden;
+	}
+
 .recipe-list {
 	@extend .no-bullets;
 	margin-bottom: 0;
@@ -62,6 +66,10 @@ row>* {
 		}
 	}
 
+#main-display, #bottom-display, .title-display {
+	width: 100%;
+	}
+
 .name.padded {
 	padding-bottom: 0.5em;
 	&.upcoming:not(:first-child) {
@@ -77,11 +85,27 @@ body {
 	overflow-x: hidden;
 	}
 
+.button.round {
+	background-color: green;
+	border-radius: 2em;
+	text-align: center;
+	float: right;
+	}
+
+#navButton .toggle {
+	display: none;
+	}
+
 .background-image {
 	z-index: -1;
 	position: absolute;
 	top: 0;
 	left: 0;
+	max-width: 100vw;
+	max-height: 100vh;
+	@media print {
+		display: none;
+		}
 	}
 
 #bottom-display {
@@ -89,7 +113,12 @@ body {
 	color: white;
 	border-bottom-left-radius: 1em;
 	border-bottom-right-radius: 1em;
-	margin-left: -2em;
+	display: table;
+	div {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		}
 	}
 
 #controls {
@@ -104,6 +133,23 @@ body {
 			}
 		@include vendor-property(transition, color 0.5s);
 		}
+	}
+
+#start-timers {
+	margin-top: 25%;
+	background-color: transparent;
+	border: 1px solid orange;
+	font-size: 1.5em;
+	&:hover {
+		background-color: darkorange;
+		}
+	@include vendor-property(transition, background-color 0.5s);
+	}
+
+#done-notification {
+	color: lightgreen;
+	font-size: 3em;
+	margin-top: 25%;
 	}
 
 #description {
@@ -127,17 +173,18 @@ body {
 	top: 1em;
 	}
 
-#submit-button, #print-button {
-	height: 4em;
-	float: right;
-	padding-right: 1em;
+.all-content {
+	padding-top: 1em;
 	}
 
 .title-display {
 	background-color: rgba(132, 132, 132, 0.5);
 	border-top-left-radius: 1em;
 	border-top-right-radius: 1em;
-	padding: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 1em;
+	padding-bottom: 0.5em;
 
 	.title {
 		color: white;
@@ -146,27 +193,6 @@ body {
 
 .check-mark {
 	height: 1em;
-	}
-
-#control-prev, #control-next {
-	display: none;
-	}
-
-#start-timers {
-	margin-top: 25%;
-	background-color: transparent;
-	border: 1px solid orange;
-	font-size: 1.5em;
-	&:hover {
-		background-color: darkorange;
-		}
-	@include vendor-property(transition, background-color 0.5s);
-	}
-
-#done-notification {
-	color: lightgreen;
-	font-size: 3em;
-	margin-top: 25%;
 	}
 
 .food-select {
@@ -196,6 +222,9 @@ body {
 	#control-play {
 		padding-left: 0px;
 		width: 100%;
+		}
+	.header-text {
+		font-size: 0.75em;
 		}
 	}
 
