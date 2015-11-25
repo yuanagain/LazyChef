@@ -105,7 +105,7 @@ class GraphAlgo:
                self.DG_dense[i][j] = 1  
 
         self.DG_dense = self.DG_dense.transpose()
-        #print(DG_dense)
+        print(self.DG_dense)
         
         #Rearrange dependencies in the dictionary to 
         #reflect reversed Digraph
@@ -133,15 +133,15 @@ class GraphAlgo:
     def getNewlyAccesibleTasks(self, tnode):
         for i in tnode.depends:
             canPut = True
-            #print("Current possible dependencies are : ")
-            #print(tnode.depends)       
+            print("Current possible dependencies are : ")
+            print(tnode.depends)       
             for j in range(0, self.numTasks[0]):
                 if self.DG_dense[j][i] == 1:
-                    #print("i is : " + str(i))
-                    #print("j is : " + str(j))
-                    #print(dct[j].state != "complete")
+                    print("i is : " + str(i))
+                    print("j is : " + str(j))
+                    print(self.dct[j].state != "complete")
                     if self.dct[j].state != "complete":
-                        if j != tnode.id:
+                        #if j != tnode.id:
                             #print("Self-Match pruned")
                             canPut = False
                             break
