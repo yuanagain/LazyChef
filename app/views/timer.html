@@ -2,7 +2,7 @@
 {% block content %}
 	<section id="main" class = "container">
 		<img src="/static/images/timer_background.png" class = "background-image" alt="">
-		<div class="container">
+		<div class="container all-content">
 			<div class="row" id = "main-display">
 				<div class="6u center">
 					<header class = "center"><h2>Active Task</h2></header>
@@ -17,7 +17,7 @@
 				</div>
 				<div class="6u$"><div class="row">
 					<div class="6u" id = "upcoming-tasks-column">
-						<header class = "center"><h3>Upcoming Tasks</h3></header>
+						<header class = "center header-text"><h3>Upcoming Tasks</h3></header>
 						<div class = "center 12u" id = "upcoming-tasks">
 							<div class="12u$ upcoming name padded" id="upcoming-name-1"></div>
 							<div class="12u$ timer upcoming center" id="upcoming-timer-1"></div>
@@ -28,7 +28,7 @@
 						</div>
 					</div>
 					<div class="6u" id = "background-tasks-column">
-						<header class = "center"><h3>Background Tasks</h3></header>
+						<header class = "center header-text"><h3>Background Tasks</h3></header>
 						<div class = "center 12u" id = "background-tasks">
 							<div id = "passive-task-nth" class = "passive-task" style = "display: none;">
 								<div class="12u$ passive name padded" id="passive-name-nth"></div>
@@ -38,12 +38,15 @@
 					</div>
 				</div></div>
 			</div>
-			<div id = "bottom-display" class = "row center">
-				<div class="6u" id = "controls"><div class = "row">
-					<div id="control-prev" class = "control 4u"><i class="fa fa-step-backward"></i></div>
-					<div id="control-play" class = "control 4u"><i class="fa fa-play"></i></div>
-					<div id="control-next" class = "control 4u"><i class="fa fa-step-forward"></i></div>
-				</div></div>
+			<div id = "bottom-display" class = "row">
+				<div class="6u" id = "controls">
+					{# <div id="control-prev" class = "control 4u hidden"><i class="fa fa-step-backward"></i></div> #}
+					<div id="control-play" class = "control 4u hidden"><i class="fa fa-play"></i></div>
+					{# <div id="control-next" class = "control 4u hidden"><i class="fa fa-step-forward"></i></div> #}
+				</div>
+				{# <div class="4u center">
+					<div id="total-timer" style = "width: 10vw; height: auto;"></div>
+				</div> #}
 				<div class="6u">
 					<ul class = "recipe-list">
 						{% for recipe in recipes %}

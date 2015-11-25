@@ -25,17 +25,18 @@ function LazyChef(data) {
 		if (! timer.isRunning()) {
 			timer.start();
 			$(this).remove();
-			$("#control-play i").get(0).className = "fa fa-pause";
+			$("#control-play").removeClass("hidden").children("i").get(0).className = "fa fa-pause";
 			}
 		});
 
+	// var totalTimer = new TimerVisualizer("#total-timer", data.end_time, data.end_time, "Overall", timer, passive_color);
+	// totalTimer.start();
+
 	fixIdleGaps(data.active);
+	timer.secondHook(0, updateActive);
+	queuePassiveTasks(data);
 
 	console.log(data);
-
-	timer.secondHook(0, updateActive);
-
-	queuePassiveTasks(data);
 
 	function updateActive() {
 		// Update the current active task

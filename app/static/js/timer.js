@@ -74,7 +74,7 @@ function TimerVisualizer(element, delta, end, name, timer, color) {
 	this.timer = timer;
 	this.timer_id = Math.random(); // generate a random ID
 	
-	this.circle = new ProgressBar.Circle(element, {
+	var options = {
 		color: color || default_color,
 		trailColor: "#ddd",
 		trailWidth: 1,
@@ -84,7 +84,10 @@ function TimerVisualizer(element, delta, end, name, timer, color) {
 		text: {
 			className: "timer-text"
 			}
-		});
+		};
+
+	this.circle = new ProgressBar.Circle(element, options);
+	
 	this.circle.set(1);
 	this.setText(this.delta);
 	}
