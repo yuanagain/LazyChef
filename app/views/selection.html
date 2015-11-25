@@ -3,11 +3,11 @@
 	<section id="main" class = "container">
 		<img src="/static/images/timer_background.png" class = "background-image" alt="">
 		<div class="container all-content">
-			<form method = "POST" action = "/submit/">
+			<form method = "POST" action = "/submit/" id = "form-selection">
 			<div class="row title-display">
 				<div class="7u"><h2 class = "title">Recipe Selection</h2></div>
 				<div class="5u">
-					<input type = "submit" name = "submit" id = "submit-button" class = "button round" value = "Generate Meal">
+					<input type = "submit" name = "submit" id = "submit-button" class = "button round" value = "Generate Meal" x-data-analytic="generate-meal">
 				</div>
 			</div>
 			<div class="row no-round" id = "main-display">

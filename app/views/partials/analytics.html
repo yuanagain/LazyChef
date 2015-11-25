@@ -2,5 +2,9 @@
 <script type = "text/javascript">
 	$(document).ready(function() {
 		Parse.initialize("qfJEdKLsk6oGWYL6CotKWZGSGxpWtGECdUT8IGhX", "fOrgC5iaXohkhpvXYhYGzJlC5JeGM6LbKzVBvZn6");
+		$("*[x-data-analytic]").click(function() {
+			var payload = {"analytics-id": this.getAttribute("x-data-analytic")};
+			Parse.Analytics.track("click", payload);
+			});
 		});
 </script>

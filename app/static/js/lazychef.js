@@ -169,7 +169,7 @@ function LazyChef(data) {
 				time_diff = next.start_time - current.end_time;
 			if (time_diff > 0) {
 				// Fill empty spaces between active nodes with "idle" nodes
-				var mockTask = {name: "Idle", "description": "", "start_time": current.end_time, "end_time": next.start_time, "time_delta": time_diff};
+				var mockTask = {name: "Wait", "description": "Nothing to do now, just hang in there!", "start_time": current.end_time, "end_time": next.start_time, "time_delta": time_diff};
 				// Insert into the array at a given position
 				array.splice(index + 1, 0, mockTask);
 				index++; // need to skip the newly inserted idle node
