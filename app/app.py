@@ -58,6 +58,8 @@ class Server(Flask):
 		def post_timers():
 			'''POST timers page'''
 			choices = session.get("choices", [])
+			if not choices:
+				return redirect(url_for(".recipe_selection"))
 			recipe_data = self.kraken.produce_dict(choices)
 			return render_template("timer.html", recipe_data = recipe_data, recipes = choices)
 
