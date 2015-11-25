@@ -80,11 +80,23 @@ class GraphAlgo:
         #global DG_dense
         #global numTasks
         
+
+        for i in range(0, len(self.node_list)):
+            print(self.node_list[i].id)
+            print(self._list[i].depends)
+            print(self._list[i].state)
+            print(self._list[i].task_str)
+            print("================")
+        
+
         #Populate dictionary and adjacency matrix from node_list
         for i in range(0,self.numTasks[0]):
 
             #If TaskNode has 0 active and background time, it's
-            #an ingredient. Add it to the
+            #an ingredient. Add it to the dictionary of ingredients
+            #within the tasknode that depends on this tasknode
+            #if self.node_list[i].back_time == 0 and \
+            #    self.node_list[i].act_time == 0:
 
             self.dct[i] = self.node_list[i]
             #print(dct[i].depends)
@@ -106,15 +118,17 @@ class GraphAlgo:
          
         self.dct[0].state = "complete"
 
-        '''
+        
         print("+++++++++++++++++++++++++")
         for i in range(0, len(self.node_list)):
             print(self.dct[i].id)
             print(self.dct[i].depends)
             print(self.dct[i].state)
             print(self.dct[i].task_str)
+            print(self.dct[i].act_time)
+            print(self.dct[i].back_time)
             print("================")
-        '''   
+           
 
     def getNewlyAccesibleTasks(self, tnode):
         for i in tnode.depends:
@@ -133,7 +147,7 @@ class GraphAlgo:
                             break
             if canPut == True:
                 self.PQ.put(self.dct[i])
-                #print("Just added " + self.dct[i].task_str)
+                print("Just added " + self.dct[i].task_str)
                         
     def optimizeRecipe(self): 
         self.initializeRecipe()
@@ -146,7 +160,7 @@ class GraphAlgo:
 
     def execute(self, tnode):
         #global global_time
-        #print("Executing " + tnode.task_str)
+        print("Executing " + tnode.task_str)
         self.recipe_out.append(tnode)
         tnode.beg_time = self.global_time
         if tnode.act_time > 0:
@@ -161,7 +175,7 @@ class GraphAlgo:
                 #print("Just popped from PQ : " + temp.task_desc)
                 #PQ.put(temp)
                 if self.PQ.empty() == True:
-                    #print("Nothing on PQ")
+                    print("Nothing on PQ")
                     long_on_ProgQ = 0
                     for j in self.InProgQ:
                         #print("WTF " + j.task_str)
@@ -176,6 +190,10 @@ class GraphAlgo:
         elif tnode.back_time > 0:
             tnode.state = "inProgress"
             self.InProgQ.append(tnode)
+        else: #tnode.back_time == 0 and tnode.act_time == 0:
+            #print("THIRD IF")
+            self.completeTask(tnode) 
+
             
     def inProgF(self, tnode):
         assert(tnode.act_time == 0)
@@ -188,6 +206,7 @@ class GraphAlgo:
         #print("completed " + tnode.task_str)
         tnode.state = "complete"
         if tnode.back_time > 0:
+            self.InProgQ.remove(tnode)
             #for i in self.InProgQ:
                 #print("test : " + i.task_str)
-            self.InProgQ.remove(tnode)
+            
