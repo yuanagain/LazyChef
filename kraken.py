@@ -115,9 +115,6 @@ class KRAKEN:
 		tlist = self.rlibs.extract_list(target)
 		galgo = GraphAlgo(tlist)
 		tasklist = galgo.optimizeRecipe()
-		print('========================')
-		for i in tasklist:
-			print i.task_str
 
 		return tdlg.tnodelist_todict(tasklist)
 

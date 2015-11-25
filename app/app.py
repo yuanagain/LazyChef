@@ -60,7 +60,7 @@ class Server(Flask):
 			choices = session.get("choices", [])
 			if not choices:
 				return redirect(url_for(".recipe_selection"))
-			recipe_data = self.kraken.produce_dict(choices)
+			recipe_data = self.kraken.produce_dict_graph(choices)
 			return render_template("timer.html", recipe_data = recipe_data, recipes = choices)
 
 		@self.route("/demo/")
