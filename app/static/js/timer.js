@@ -31,24 +31,41 @@ Timer.prototype.isRunning = function() {
 	return this.interval != null;
 	}
 
+Timer.prototype.runTasks = function() {
+	// Run the tasks for the current second
+	if (this.hooks.hasOwnProperty(this.elapsed)) {
+		// call each hook for each second
+		for (var i = 0; i < this.hooks[this.elapsed].length; i++) {
+			this.hooks[this.elapsed][i]();
+			}
+		delete this.hooks[this.elapsed]; // no way to use these hooks again
+		}
+	for (var key in this.hooks[-1]) {
+		this.hooks[-1][key](this.elapsed);
+		}
+	}
+
 Timer.prototype.start = function() {
 	// Start the timer
 	if (! this.isRunning()) {
 		var timer = this;
 		this.interval = setInterval(function() {
-			if (timer.hooks.hasOwnProperty(timer.elapsed)) {
-				// call each hook for each second
-				for (var i = 0; i < timer.hooks[timer.elapsed].length; i++) {
-					timer.hooks[timer.elapsed][i]();
-					}
-				delete timer.hooks[timer.elapsed]; // no way to use these hooks again
-				}
-			for (var key in timer.hooks[-1]) {
-				timer.hooks[-1][key](timer.elapsed);
-				}
+			timer.runTasks();
 			timer.elapsed++;
 			}, 1000);
 		}
+	}
+
+Timer.prototype.next = function() {
+	// Progress to the next second
+	this.elapsed++;
+	this.runTasks();
+	}
+
+Timer.prototype.set = function(value) {
+	// Set the value of the timer
+	this.elapsed = value;
+	this.runTasks();
 	}
 
 Timer.prototype.stop = function() {
@@ -94,8 +111,8 @@ function TimerVisualizer(element, delta, end, name, timer, color) {
 
 TimerVisualizer.prototype.destroy = function() {
 	// Destroy the timer visualizer
-	this.circle.destroy();
 	this.stop();
+	this.circle.destroy();
 	}
 
 TimerVisualizer.prototype.start = function() {
