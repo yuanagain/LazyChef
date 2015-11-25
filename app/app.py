@@ -9,14 +9,16 @@ import sys, os
 
 sys.path.append(os.path.abspath(".."))
 
-import walmartJSON
 import kraken
 
 def main():
 	'''Create the server and start it'''
 	server = Server("config.FlaskSettings", template_folder = "views", static_folder = "static", static_url_path = "/static")
 	server.configureRoutes()
-	server.run()
+	if config.DEV_MODE:
+		server.run()
+	else:
+		server.run(host = "0.0.0.0", port = 80)
 
 class Server(Flask):
 	'''Creates a basic Flask Web Server'''
@@ -56,6 +58,8 @@ class Server(Flask):
 		def post_timers():
 			'''POST timers page'''
 			choices = session.get("choices", [])
+			if not choices:
+				return redirect(url_for(".recipe_selection"))
 			recipe_data = self.kraken.produce_dict(choices)
 			return render_template("timer.html", recipe_data = recipe_data, recipes = choices)
 
