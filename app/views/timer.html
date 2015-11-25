@@ -8,7 +8,7 @@
 					<header class = "center"><h2>Active Task</h2></header>
 					<h3><div id="name">Task</div></h3>
 					<div class="timer center active" id = "active-task-timer">
-						<button class = "button" id = "start-timers">Start</button>
+						<button class = "button" id = "start-timers" x-data-analytic="start-timer">Start</button>
 					</div>
 					<div style = "display: none;" id = "done-notification">
 						<h2>Done!</h2>
@@ -41,8 +41,8 @@
 			<div id = "bottom-display" class = "row">
 				<div class="6u" id = "controls">
 					{# <div id="control-prev" class = "control 4u hidden"><i class="fa fa-step-backward"></i></div> #}
-					<div id="control-play" class = "control 4u hidden"><i class="fa fa-play"></i></div>
-					<div id="control-next" class = "control 4u hidden"><i class="fa fa-step-forward"></i></div>
+					<div id="control-play" class = "control 4u hidden"><i class="fa fa-play" x-data-analytic="control-play"></i></div>
+					<div id="control-next" class = "control 4u hidden"><i class="fa fa-step-forward" x-data-analytic="control-skip"></i></div>
 				</div>
 				{# <div class="4u center">
 					<div id="total-timer" style = "width: 10vw; height: auto;"></div>

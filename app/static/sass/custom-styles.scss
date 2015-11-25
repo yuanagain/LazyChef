@@ -167,10 +167,13 @@ body {
 	}
 
 #logo {
-	height: 3em;
+	height: 5em;
 	position: absolute;
 	left: 1em;
 	top: 1em;
+	@media #{$mobile} {
+		height: 3em;
+		}
 	}
 
 .all-content {
