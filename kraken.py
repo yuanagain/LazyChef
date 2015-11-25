@@ -150,7 +150,7 @@ def main():
 	start_time_ilya = time.clock()
 	fg = KRAKEN("./recipes_main/")
 	tg = ['Blondies']
-	#tg = ['Baked Potato', 'Bake Pasta and Cheese', \
+	#tg = ['Baked Potato', 'Bake Pasta and Cheese' ]
 	#       'Bake Potatoes', 'Boiling Water', \
 	#       'Boil Water', 'Cheese', 'Cook Pasta', \
 	#       'Macaroni Baking', 'Mix Cheese In', \
@@ -160,11 +160,11 @@ def main():
 	end_time_ilya = time.clock()
 	print(end_time_ilya - start_time_ilya)
 	
-
-	#fg = KRAKEN('./more_recipes/')
-	#tg = ['Piggy Wiggy', 'Cocktail Sausages', 'Roll Dough',\
-    #       'Wrap Sausages', 'Turn on Oven', 'Preheat Oven']
-	#print(fg.produce_dict_graph(tg))
-
+	'''
+	fg = KRAKEN('./more_recipes/')
+	tg = ['Piggy Wiggy', 'Cocktail Sausages', 'Roll Dough',\
+           'Wrap Sausages', 'Turn on Oven', 'Preheat Oven']
+	print(fg.produce_dict_graph(tg))
+	'''
 if __name__ == "__main__":
 	main()

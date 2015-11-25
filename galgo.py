@@ -80,14 +80,14 @@ class GraphAlgo:
         #global DG_dense
         #global numTasks
         
-
+        '''
         for i in range(0, len(self.node_list)):
             print(self.node_list[i].id)
-            print(self._list[i].depends)
-            print(self._list[i].state)
-            print(self._list[i].task_str)
+            print(self.node_list[i].depends)
+            print(self.node_list[i].state)
+            print(self.node_list[i].task_str)
             print("================")
-        
+        '''
 
         #Populate dictionary and adjacency matrix from node_list
         for i in range(0,self.numTasks[0]):
