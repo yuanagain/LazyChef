@@ -91,7 +91,6 @@ def maximizer(node_list):
 			champ = seq
 			first_valid_run = False
 			optimal_ordering = tlist
-			print("first solution found")
 			continue
 
 		# update champion
@@ -123,7 +122,6 @@ def create_iterations(rg, node_list):
 			atasks.append(i)
 
 	head = head + ingredients
-
 	atasks_permutes = itertools.permutations(atasks)
 	out_permutes = []
 
@@ -201,7 +199,7 @@ def evaluate(node_list, ordering):
 		node_list[i].beg_time = start_time[i]
 		node_list[i].elap_time = end_time[i] - start_time[i]
 
-	node_list = sorted(node_list, key=keyFunc)
+	node_list = sorted(node_list, key = keyFunc) # this line is causing bug on server
 
 	return current_time, node_list
 
