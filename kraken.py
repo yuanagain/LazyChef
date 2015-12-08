@@ -117,7 +117,8 @@ class KRAKEN:
 		tasklist = galgo.optimizeRecipe()
 		print('========================')
 		for i in tasklist:
-			print i.task_str
+			print i.task_desc
+			print i.beg_time
 
 		return tdlg.tnodelist_todict(tasklist)
 
@@ -146,11 +147,14 @@ def main():
 	end_time_yuan = time.clock()
 	print(end_time_yuan - start_time_yuan)
 	'''
+
 	start_time_ilya = time.clock()
-	fg = KRAKEN("./recipes_main/canapes/")
+	fg = KRAKEN("./recipes_main/turkishCoffee/")
 	#tg = ['Bake Potatoes', 'Bake Pasta and Cheese']
-	tg = ['Put Cranberries']
+	#tg = ['Put Cranberries']
 	#tg = ['Bake Brownies']
+	#tg = ['Bake Blondie']
+	tg = ['Add Cardamom']
 	#tg = ['Baked Potato', 'Bake Pasta and Cheese']
 	#       'Bake Potatoes', 'Boiling Water', \
 	#       'Boil Water', 'Cheese', 'Cook Pasta', \

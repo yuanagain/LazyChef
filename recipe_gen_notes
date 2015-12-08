@@ -1,0 +1,11 @@
+Brainstorming for command prompt recipe generator:
+
+generic class for each of the underlying concepts of cooking
+
+Class (rather than methods) defining operators on these concepts
+
+a database that stores all finished recipes
+
+a database that stores all concepts? (these are some kind
+of identifiers to make the distinction)
+
