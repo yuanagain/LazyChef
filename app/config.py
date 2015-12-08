@@ -18,7 +18,7 @@ class FlaskSettings(object):
 	SERVER_NAME = "localhost:8080" if DEV_MODE else "app.jelli.fish"
 	PREFERRED_URL_SCHEME = "http://"
 
-RECIPES = ["Baked Potato", "Cook Pasta"]
+RECIPES = ["Blondies", "Canapes", "Turkish Coffee"]
 
 VIEW_GLOBALS = {
 	"name": "Jellifish"
